@@ -3,6 +3,7 @@
 #include "LGFX_Config.hpp"
 #include "Screens/ScreenManager.hpp"
 #include "UpdateManager.hpp"
+#include "InputManager.hpp"
 
 class Application
 {
@@ -13,4 +14,5 @@ public:
 private:
     ScreenManager screenManager;
     UpdateManager updateManager;
+    InputManager inputManager;
 };

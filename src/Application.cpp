@@ -2,20 +2,19 @@
 
 void Application::begin(LGFX& lcd)
 {
+    inputManager.begin();
     screenManager.begin(lcd);
 }
 
 void Application::update(LGFX& lcd)
 {
-    static uint32_t previous = millis();
-
-    uint32_t now = millis();
-
-    uint32_t delta = now - previous;
-
-    previous = now;
-
+    inputManager.update();
     updateManager.update();
+
+    if(inputManager.press())
+    {
+        screenManager.nextScreen(lcd);
+    }
 
     screenManager.update(lcd);
 }

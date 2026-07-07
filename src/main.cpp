@@ -19,6 +19,4 @@ void setup()
 void loop()
 {
     app.update(lcd);
-
-    delay(10);
 }
