@@ -10,6 +10,7 @@ struct AppState
 
     // WiFi
     bool wifiConnected = false;
+    String ipAddress = "";
 
     // Smart Home
     bool lamp = false;
@@ -21,6 +22,7 @@ struct AppState
 
     // System
     uint32_t freeHeap = 0;
+    uint32_t uptime = 0;
 };
 
 extern AppState appState;

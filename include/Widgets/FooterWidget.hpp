@@ -2,4 +2,8 @@
 
 #include "LGFX_Config.hpp"
 
-void drawFooter(LGFX& lcd);
+class FooterWidget
+{
+public:
+    void draw(LGFX &);
+};

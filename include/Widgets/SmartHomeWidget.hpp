@@ -2,4 +2,8 @@
 
 #include "LGFX_Config.hpp"
 
-void drawSmartHomeWidget(LGFX& lcd);
+class SmartHomeWidget
+{
+public:
+    void draw(LGFX &);
+};

@@ -2,4 +2,8 @@
 
 #include "LGFX_Config.hpp"
 
-void drawHeader(LGFX& lcd);
+class HeaderWidget
+{
+public:
+    void draw(LGFX &);
+};

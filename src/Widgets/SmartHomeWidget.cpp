@@ -3,7 +3,7 @@
 
 #include "Layout.hpp"
 
-void drawSmartHomeWidget(LGFX& lcd)
+void SmartHomeWidget::draw(LGFX &lcd)
 {
     lcd.drawRoundRect(
         Layout::SmartCard.x,
@@ -11,18 +11,17 @@ void drawSmartHomeWidget(LGFX& lcd)
         Layout::SmartCard.w,
         Layout::SmartCard.h,
         10,
-        Theme::Primary
-    );
+        Theme::Primary);
 
     lcd.setTextColor(Theme::White);
 
     lcd.setFont(&fonts::Font2);
 
-    lcd.drawCentreString("SMART HOME",320,70);
+    lcd.drawCentreString("SMART HOME", 320, 70);
 
-    lcd.drawString("Lamp",195,115);
-    lcd.drawString("OFF",390,115);
+    lcd.drawString("Lamp", 195, 115);
+    lcd.drawString("OFF", 390, 115);
 
-    lcd.drawString("Fan",195,155);
-    lcd.drawString("OFF",390,155);
+    lcd.drawString("Fan", 195, 155);
+    lcd.drawString("OFF", 390, 155);
 }
