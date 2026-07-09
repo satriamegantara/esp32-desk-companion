@@ -46,6 +46,6 @@ void Application::update(LGFX &lcd)
 
     appState.freeHeap = ESP.getFreeHeap() / 1024;
     appState.uptime = millis() / 1000;
-    uiController.update();
+    uiController.update(lcd);
     uiController.render(lcd);
 }

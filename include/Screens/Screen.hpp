@@ -11,8 +11,9 @@ public:
     virtual void update(LGFX &lcd) = 0;
     virtual void end() {}
 
-    // Default: screen tidak punya navigasi internal
-    virtual void nextWidget() {}
+    // WAJIB ADA
+    virtual void activate() {}
 
+    virtual void nextWidget() {}
     virtual void previousWidget() {}
 };

@@ -15,11 +15,13 @@ public:
 
     Widget *currentWidget() const;
 
+    uint8_t selectedIndex() const;
+
 private:
     static constexpr uint8_t MAX_WIDGETS = 10;
 
     Widget *widgets[MAX_WIDGETS];
 
     uint8_t count = 0;
-    uint8_t selectedIndex = 0;
+    uint8_t currentIndex = 0;
 };

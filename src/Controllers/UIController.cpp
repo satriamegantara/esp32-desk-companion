@@ -16,10 +16,10 @@ void UIController::begin(LGFX &lcd)
   screenManager.begin(lcd);
 }
 
-void UIController::update()
+void UIController::update(LGFX &lcd)
 {
   handleNavigation();
-  handleSelection();
+  handleSelection(lcd);
   handleBootButton();
 }
 
@@ -36,13 +36,18 @@ void UIController::handleNavigation()
   }
 }
 
-void UIController::handleSelection()
+void UIController::handleSelection(LGFX &lcd)
 {
-  if (encoder.pressed())
+  if (!encoder.pressed())
+    return;
+
+  if (screenManager.currentScreen() == ScreenID::Dashboard)
   {
-    activateFocusedItem();
+    Serial.print("Widget: ");
+    Serial.println(screenManager.getDashboard().selectedWidget());
   }
 }
+
 void UIController::handleBootButton()
 {
   static bool last = HIGH;

@@ -12,12 +12,12 @@ public:
                  SmartHomeController &smartHome);
 
     void begin(LGFX &lcd);
-    void update();
+    void update(LGFX &lcd);
     void render(LGFX &lcd);
 
 private:
     void handleNavigation();
-    void handleSelection();
+    void handleSelection(LGFX &lcd);
     void handleBootButton();
 
     void focusNext();

@@ -15,4 +15,9 @@ private:
     void drawSwing(LGFX &lcd);
     void drawMagicWind(LGFX &lcd);
     void drawTimer(LGFX &lcd);
+    void drawRow(
+        LGFX &lcd,
+        const char *label,
+        const String &value,
+        int y);
 };

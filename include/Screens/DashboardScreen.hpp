@@ -19,6 +19,8 @@ public:
     void previousWidget() override;
     void updateSelection();
 
+    uint8_t selectedWidget() const;
+
 private:
     StatusBar statusBar;
     ClockWidget clockWidget;

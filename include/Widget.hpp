@@ -2,6 +2,7 @@
 
 #include "LGFX_Config.hpp"
 #include "Rect.hpp"
+#include "Theme.hpp"
 
 class Widget
 {

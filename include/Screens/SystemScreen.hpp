@@ -13,5 +13,4 @@ public:
 
     void nextWidget() override;
     void previousWidget() override;
-    // UIAction activateWidget() override;
 };

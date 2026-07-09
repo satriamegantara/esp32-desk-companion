@@ -32,10 +32,14 @@ void Encoder::update()
 
     if (digitalRead(Pins::EncoderSW) == LOW)
     {
+        Serial.println("BUTTON LOW");
+
         static uint32_t lastPress = 0;
 
         if (millis() - lastPress > 200)
         {
+            Serial.println("PRESS FLAG");
+
             pressFlag = true;
             lastPress = millis();
         }

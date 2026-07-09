@@ -29,22 +29,24 @@ void WidgetManager::update(LGFX &lcd)
 void WidgetManager::clear()
 {
     count = 0;
-    selectedIndex = 0;
+    currentIndex = 0;
 }
 
 void WidgetManager::next()
 {
+    Serial.printf("Before: %d\n", currentIndex);
     if (count == 0)
         return;
 
-    widgets[selectedIndex]->setSelected(false);
+    widgets[currentIndex]->setSelected(false);
 
-    selectedIndex++;
+    currentIndex++;
 
-    if (selectedIndex >= count)
-        selectedIndex = 0;
+    if (currentIndex >= count)
+        currentIndex = 0;
 
-    widgets[selectedIndex]->setSelected(true);
+    widgets[currentIndex]->setSelected(true);
+    Serial.printf("After: %d\n", currentIndex);
 }
 
 void WidgetManager::previous()
@@ -52,14 +54,14 @@ void WidgetManager::previous()
     if (count == 0)
         return;
 
-    widgets[selectedIndex]->setSelected(false);
+    widgets[currentIndex]->setSelected(false);
 
-    if (selectedIndex == 0)
-        selectedIndex = count - 1;
+    if (currentIndex == 0)
+        currentIndex = count - 1;
     else
-        selectedIndex--;
+        currentIndex--;
 
-    widgets[selectedIndex]->setSelected(true);
+    widgets[currentIndex]->setSelected(true);
 }
 
 Widget *WidgetManager::currentWidget() const
@@ -67,5 +69,10 @@ Widget *WidgetManager::currentWidget() const
     if (count == 0)
         return nullptr;
 
-    return widgets[selectedIndex];
+    return widgets[currentIndex];
+}
+
+uint8_t WidgetManager::selectedIndex() const
+{
+    return currentIndex;
 }

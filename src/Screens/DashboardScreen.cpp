@@ -6,6 +6,7 @@
 #include "Widgets/HeaderWidget.hpp"
 #include "Widgets/StatusBar.hpp"
 #include "Theme.hpp"
+#include "ScreenID.hpp"
 
 #include "Dashboard.hpp"
 
@@ -43,7 +44,11 @@ void DashboardScreen::end()
 
 void DashboardScreen::nextWidget()
 {
+    Serial.printf("NEXT this=%p widgetManager=%p\n", this, &widgetManager);
+
     widgetManager.next();
+
+    Serial.printf("Index after next=%d\n", widgetManager.selectedIndex());
 
     updateSelection();
 }
@@ -73,4 +78,13 @@ void DashboardScreen::updateSelection()
     dirty.clock = true;
     dirty.smartHome = true;
     dirty.footer = true;
+}
+
+uint8_t DashboardScreen::selectedWidget() const
+{
+    Serial.printf("DashboardScreen this = %p\n", this);
+    Serial.printf("WidgetManager = %p\n", &widgetManager);
+    Serial.printf("Index = %d\n", widgetManager.selectedIndex());
+
+    return widgetManager.selectedIndex();
 }
