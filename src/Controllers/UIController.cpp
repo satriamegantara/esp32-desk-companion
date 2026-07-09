@@ -46,15 +46,23 @@ void UIController::handleSelection(LGFX &lcd)
   if (!encoder.pressed())
     return;
 
-  if (screenManager.currentScreen() != ScreenID::Dashboard)
-    return;
-
-  uint8_t selected = screenManager.getDashboard().selectedWidget();
-
-  if (selected == 1)
+  if (screenManager.currentScreen() == ScreenID::Dashboard)
   {
-    screenManager.open(ScreenID::SmartHome, lcd);
+    uint8_t selected =
+        screenManager.getDashboard().selectedWidget();
+
+    if (selected == 1)
+    {
+      screenManager.open(
+          ScreenID::SmartHome,
+          lcd);
+    }
+
+    return;
   }
+
+  // Semua screen selain Dashboard
+  screenManager.activateCurrent();
 }
 
 void UIController::handleBootButton()

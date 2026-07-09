@@ -6,32 +6,34 @@
 
 void SmartHomeScreen::begin(LGFX &lcd)
 {
+    controller.begin();
+
     lcd.fillScreen(Theme::Background);
 
     drawHeader(lcd);
 
     drawLamp(lcd);
-
     drawFan(lcd);
-
     drawSpeed(lcd);
-
     drawSwing(lcd);
+    drawBack(lcd);
+
+    needRedraw = false;
 }
 
 void SmartHomeScreen::update(LGFX &lcd)
 {
-    lcd.fillScreen(Theme::Background);
+    if (!needRedraw)
+        return;
 
-    drawHeader(lcd);
+    drawRow(lcd, previous);
 
-    drawLamp(lcd);
+    drawRow(lcd, selected);
 
-    drawFan(lcd);
+    if (selected == SmartHomeMenu::Lamp)
+        drawLamp(lcd);
 
-    drawSpeed(lcd);
-
-    drawSwing(lcd);
+    needRedraw = false;
 }
 
 void SmartHomeScreen::drawHeader(LGFX &lcd)
@@ -49,6 +51,13 @@ void SmartHomeScreen::drawHeader(LGFX &lcd)
 void SmartHomeScreen::drawLamp(LGFX &lcd)
 {
     int y = Layout::SH_StartY;
+
+    lcd.fillRect(
+        20,
+        y - 2,
+        440,
+        24,
+        Theme::Background);
 
     lcd.setFont(&fonts::Font2);
 
@@ -71,6 +80,13 @@ void SmartHomeScreen::drawLamp(LGFX &lcd)
 void SmartHomeScreen::drawFan(LGFX &lcd)
 {
     int y = Layout::SH_StartY + Layout::SH_RowHeight;
+
+    lcd.fillRect(
+        20,
+        y - 2,
+        440,
+        24,
+        Theme::Background);
 
     lcd.setFont(&fonts::Font2);
 
@@ -95,6 +111,13 @@ void SmartHomeScreen::drawSpeed(LGFX &lcd)
     int y =
         Layout::SH_StartY +
         Layout::SH_RowHeight * 2;
+
+    lcd.fillRect(
+        20,
+        y - 2,
+        440,
+        24,
+        Theme::Background);
 
     lcd.setFont(&fonts::Font2);
 
@@ -137,6 +160,13 @@ void SmartHomeScreen::drawSwing(LGFX &lcd)
         Layout::SH_StartY +
         Layout::SH_RowHeight * 3;
 
+    lcd.fillRect(
+        20,
+        y - 2,
+        440,
+        24,
+        Theme::Background);
+
     lcd.setFont(&fonts::Font2);
 
     String prefix =
@@ -157,6 +187,8 @@ void SmartHomeScreen::drawSwing(LGFX &lcd)
 
 void SmartHomeScreen::nextWidget()
 {
+    previous = selected;
+
     uint8_t index = static_cast<uint8_t>(selected);
 
     index++;
@@ -165,10 +197,14 @@ void SmartHomeScreen::nextWidget()
         index = 0;
 
     selected = static_cast<SmartHomeMenu>(index);
+
+    needRedraw = true;
 }
 
 void SmartHomeScreen::previousWidget()
 {
+    previous = selected;
+
     int index = static_cast<int>(selected);
 
     index--;
@@ -177,4 +213,85 @@ void SmartHomeScreen::previousWidget()
         index = static_cast<int>(SmartHomeMenu::Count) - 1;
 
     selected = static_cast<SmartHomeMenu>(index);
+
+    needRedraw = true;
+}
+
+void SmartHomeScreen::drawBack(LGFX &lcd)
+{
+    int y =
+        Layout::SH_StartY +
+        Layout::SH_RowHeight * 4;
+
+    lcd.fillRect(
+        20,
+        y - 2,
+        440,
+        24,
+        Theme::Background);
+
+    lcd.drawFastHLine(
+        20,
+        y - 12,
+        440,
+        TFT_DARKGREY);
+
+    String prefix =
+        selected == SmartHomeMenu::Back
+            ? "> "
+            : "  ";
+
+    lcd.drawString(
+        prefix + "Back",
+        Layout::SH_TextX,
+        y);
+}
+
+void SmartHomeScreen::activate()
+{
+    switch (selected)
+    {
+    case SmartHomeMenu::Lamp:
+
+        controller.toggleLamp();
+
+        needRedraw = true;
+
+        break;
+
+    default:
+
+        break;
+    }
+}
+
+void SmartHomeScreen::drawRow(
+    LGFX &lcd,
+    SmartHomeMenu menu)
+{
+    switch (menu)
+    {
+    case SmartHomeMenu::Lamp:
+        drawLamp(lcd);
+        break;
+
+    case SmartHomeMenu::Fan:
+        drawFan(lcd);
+        break;
+
+    case SmartHomeMenu::Speed:
+        drawSpeed(lcd);
+        break;
+
+    case SmartHomeMenu::Swing:
+        drawSwing(lcd);
+        break;
+
+    case SmartHomeMenu::Back:
+        drawBack(lcd);
+        break;
+
+    default:
+        break;
+    }
 }
