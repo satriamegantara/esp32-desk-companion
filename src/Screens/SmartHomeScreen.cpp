@@ -3,12 +3,13 @@
 
 void SmartHomeScreen::begin(LGFX &lcd)
 {
-    lcd.fillScreen(Theme::Background);
 
-    lcd.drawCentreString(
-        "SMART HOME",
-        240,
-        20);
+    lcd.fillScreen(TFT_BLUE);
+
+    lcd.setTextColor(TFT_WHITE);
+    lcd.setFont(&fonts::Font4);
+
+    lcd.drawCentreString("SMART HOME", 240, 120);
 }
 
 void SmartHomeScreen::update(LGFX &lcd)

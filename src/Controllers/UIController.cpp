@@ -44,16 +44,11 @@ void UIController::handleSelection(LGFX &lcd)
   if (screenManager.currentScreen() != ScreenID::Dashboard)
     return;
 
-  switch (screenManager.getDashboard().selectedWidget())
-  {
-  case 0:
-    Serial.println("Clock selected");
-    break;
+  uint8_t selected = screenManager.getDashboard().selectedWidget();
 
-  case 1:
-    Serial.println("Open SmartHome");
+  if (selected == 1)
+  {
     screenManager.open(ScreenID::SmartHome, lcd);
-    break;
   }
 }
 

@@ -34,7 +34,6 @@ void WidgetManager::clear()
 
 void WidgetManager::next()
 {
-    Serial.printf("Before: %d\n", currentIndex);
     if (count == 0)
         return;
 
@@ -46,7 +45,6 @@ void WidgetManager::next()
         currentIndex = 0;
 
     widgets[currentIndex]->setSelected(true);
-    Serial.printf("After: %d\n", currentIndex);
 }
 
 void WidgetManager::previous()

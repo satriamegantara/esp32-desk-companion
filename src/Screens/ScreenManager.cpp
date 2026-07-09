@@ -50,6 +50,7 @@ void ScreenManager::activateCurrent()
 
 void ScreenManager::open(ScreenID screen, LGFX &lcd)
 {
+
     screens[current]->end();
 
     switch (screen)
@@ -57,18 +58,20 @@ void ScreenManager::open(ScreenID screen, LGFX &lcd)
     case ScreenID::Dashboard:
         current = 0;
         break;
+
     case ScreenID::SmartHome:
         current = 1;
         break;
+
     case ScreenID::Camera:
         current = 2;
         break;
+
     case ScreenID::System:
         current = 3;
         break;
     }
 
-    lcd.fillScreen(Theme::Background);
     screens[current]->begin(lcd);
 }
 
@@ -78,16 +81,12 @@ ScreenID ScreenManager::currentScreen() const
     {
     case 0:
         return ScreenID::Dashboard;
-
     case 1:
         return ScreenID::SmartHome;
-
     case 2:
         return ScreenID::Camera;
-
     case 3:
         return ScreenID::System;
-
     default:
         return ScreenID::Dashboard;
     }

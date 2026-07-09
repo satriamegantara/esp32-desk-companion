@@ -44,11 +44,8 @@ void DashboardScreen::end()
 
 void DashboardScreen::nextWidget()
 {
-    Serial.printf("NEXT this=%p widgetManager=%p\n", this, &widgetManager);
 
     widgetManager.next();
-
-    Serial.printf("Index after next=%d\n", widgetManager.selectedIndex());
 
     updateSelection();
 }
@@ -82,9 +79,6 @@ void DashboardScreen::updateSelection()
 
 uint8_t DashboardScreen::selectedWidget() const
 {
-    Serial.printf("DashboardScreen this = %p\n", this);
-    Serial.printf("WidgetManager = %p\n", &widgetManager);
-    Serial.printf("Index = %d\n", widgetManager.selectedIndex());
 
     return widgetManager.selectedIndex();
 }
