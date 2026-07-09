@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Drivers/MJPEGClient.hpp"
+
 class CameraController
 {
 public:
@@ -11,4 +13,5 @@ public:
 
 private:
     bool cameraConnected = false;
+    MJPEGClient client;
 };
