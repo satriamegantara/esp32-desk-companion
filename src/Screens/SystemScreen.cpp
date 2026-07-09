@@ -48,3 +48,16 @@ void SystemScreen::update(LGFX &lcd)
 void SystemScreen::end()
 {
 }
+
+// void SystemScreen::nextWidget()
+// {
+// }
+
+// void SystemScreen::previousWidget()
+// {
+// }
+
+// UIAction SystemScreen::activateWidget()
+// {
+//     return UIAction::None;
+// }

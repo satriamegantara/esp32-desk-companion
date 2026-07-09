@@ -9,10 +9,10 @@ class ScreenManager
 {
 public:
     void begin(LGFX &lcd);
-
     void update(LGFX &lcd);
-
     void nextScreen(LGFX &lcd);
+
+    // UIAction activateCurrentWidget();
 
 private:
     static constexpr uint8_t SCREEN_COUNT = 2;

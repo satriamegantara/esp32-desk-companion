@@ -10,4 +10,8 @@ public:
     void update(LGFX &lcd) override;
 
     void end() override;
+
+    // void nextWidget() override;
+    // void previousWidget() override;
+    // UIAction activateWidget() override;
 };

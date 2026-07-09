@@ -13,39 +13,72 @@ void DashboardScreen::begin(LGFX &lcd)
 {
     lcd.fillScreen(Theme::Background);
 
-    clockWidget.setSelected(selectedWidget == 0);
+    clock.setSelected(selectedWidget == 0);
 
-    smartHomeWidget.setSelected(selectedWidget == 1);
+    smartHome.setSelected(selectedWidget == 1);
 
-    statusBar.draw(lcd);
-    clockWidget.draw(lcd);
-    smartHomeWidget.draw(lcd);
-    footerWidget.draw(lcd);
+    container.add(&statusBar);
+    container.add(&clock);
+    container.add(&smartHome);
+    container.add(&footer);
 
     dirty.header = false;
     dirty.clock = false;
     dirty.smartHome = false;
     dirty.footer = false;
+
+    container.draw(lcd);
 }
 
 void DashboardScreen::update(LGFX &lcd)
 {
-    if (dirty.header)
-    {
-        statusBar.draw(lcd);
-        dirty.header = false;
-    }
-
-    clockWidget.update(lcd);
-
-    smartHomeWidget.update(lcd);
-
-    if (dirty.footer)
-    {
-        footerWidget.update(lcd);
-    }
+    container.update(lcd);
 }
 
 void DashboardScreen::end()
 {
 }
+
+// void DashboardScreen::nextWidget()
+// {
+//     selectedWidget++;
+
+//     if (selectedWidget > 1)
+//         selectedWidget = 0;
+
+//     clock.setSelected(selectedWidget == 0);
+
+//     smartHome.setSelected(selectedWidget == 1);
+
+//     dirty.smartHome = true;
+//     dirty.clock = true;
+// }
+
+// void DashboardScreen::previousWidget()
+// {
+//     selectedWidget--;
+
+//     if (selectedWidget < 0)
+//         selectedWidget = 1;
+
+//     clock.setSelected(selectedWidget == 0);
+
+//     smartHome.setSelected(selectedWidget == 1);
+
+//     dirty.smartHome = true;
+//     dirty.clock = true;
+// }
+
+// UIAction DashboardScreen::activateWidget()
+// {
+//     switch (selectedWidget)
+//     {
+//     case 0:
+//         return UIAction::None;
+
+//     case 1:
+//         return UIAction::ToggleLamp;
+//     }
+
+//     return UIAction::None;
+// }

@@ -6,6 +6,7 @@
 #include "Widgets/ClockWidget.hpp"
 #include "Widgets/SmartHomeWidget.hpp"
 #include "Widgets/FooterWidget.hpp"
+#include "Widgets/WidgetContainer.hpp"
 
 class DashboardScreen : public Screen
 {
@@ -14,14 +15,20 @@ public:
     void update(LGFX &lcd) override;
     void end() override;
 
+    // void nextWidget() override;
+    // void previousWidget() override;
+    // UIAction activateWidget() override;
+
 private:
     int selectedWidget = 0;
 
     StatusBar statusBar;
 
-    ClockWidget clockWidget;
+    ClockWidget clock;
 
-    SmartHomeWidget smartHomeWidget;
+    SmartHomeWidget smartHome;
 
-    FooterWidget footerWidget;
+    FooterWidget footer;
+
+    WidgetContainer container;
 };
