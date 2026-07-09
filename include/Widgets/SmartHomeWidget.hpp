@@ -11,4 +11,8 @@ public:
 private:
     void drawLamp(LGFX &lcd);
     void drawFan(LGFX &lcd);
+    void drawSpeed(LGFX &lcd);
+    void drawSwing(LGFX &lcd);
+    void drawMagicWind(LGFX &lcd);
+    void drawTimer(LGFX &lcd);
 };

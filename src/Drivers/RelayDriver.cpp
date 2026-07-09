@@ -10,12 +10,39 @@ void RelayDriver::begin()
     digitalWrite(Pins::RelayFan, HIGH);
 }
 
-void RelayDriver::setLamp(bool on)
+RelayDriver::RelayDriver(uint8_t pin, bool activeLow)
+    : pin(pin),
+      activeLow(activeLow)
 {
-    digitalWrite(Pins::RelayLamp, on ? LOW : HIGH);
 }
 
-void RelayDriver::setFan(bool on)
+void RelayDriver::on()
 {
-    digitalWrite(Pins::RelayFan, on ? LOW : HIGH);
+    state = true;
+
+    digitalWrite(
+        pin,
+        activeLow ? LOW : HIGH);
+}
+
+void RelayDriver::off()
+{
+    state = false;
+
+    digitalWrite(
+        pin,
+        activeLow ? HIGH : LOW);
+}
+
+void RelayDriver::toggle()
+{
+    if (state)
+        off();
+    else
+        on();
+}
+
+bool RelayDriver::isOn() const
+{
+    return state;
 }

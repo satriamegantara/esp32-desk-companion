@@ -14,6 +14,13 @@ enum class NavigationMode
     Widget
 };
 
+enum class FanSpeed
+{
+    Low,
+    Medium,
+    High
+};
+
 struct AppState
 {
     // Clock
@@ -38,6 +45,14 @@ struct AppState
     // System
     uint32_t freeHeap = 0;
     uint32_t uptime = 0;
+
+    FanSpeed fanSpeed = FanSpeed::Low;
+
+    bool swing = false;
+
+    bool magicWind = false;
+
+    uint8_t timerHour = 0;
 };
 
 extern AppState appState;

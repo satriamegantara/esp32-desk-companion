@@ -29,7 +29,12 @@ void ScreenManager::nextScreen(LGFX &lcd)
     screens[current]->begin(lcd);
 }
 
-// UIAction ScreenManager::activateCurrentWidget()
-// {
-//     return screens[current]->activateWidget();
-// }
+void ScreenManager::nextWidget()
+{
+    screens[current]->nextWidget();
+}
+
+void ScreenManager::previousWidget()
+{
+    screens[current]->previousWidget();
+}

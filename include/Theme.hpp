@@ -8,6 +8,7 @@ namespace Theme
 
     constexpr uint16_t Header = 0x18E3;
     constexpr uint16_t Card = 0x2124;
+    constexpr uint16_t Accent = TFT_YELLOW;
 
     constexpr uint16_t Primary = TFT_CYAN;
 

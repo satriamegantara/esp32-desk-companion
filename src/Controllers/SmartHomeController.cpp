@@ -8,23 +8,129 @@ extern DirtyFlags dirty;
 
 void SmartHomeController::begin()
 {
-    relay.begin();
+    lampRelay.begin();
+    fanRelay.begin();
+    irSender.begin();
+}
+
+void SmartHomeController::syncLamp()
+{
+    appState.lamp = lampRelay.isOn();
+    dirty.smartHome = true;
+}
+
+void SmartHomeController::syncFan()
+{
+    appState.fan = fanRelay.isOn();
+    dirty.smartHome = true;
+}
+
+void SmartHomeController::turnLampOn()
+{
+    lampRelay.on();
+    syncLamp();
+}
+
+void SmartHomeController::turnLampOff()
+{
+    lampRelay.off();
+    syncLamp();
 }
 
 void SmartHomeController::toggleLamp()
 {
-    appState.lamp = !appState.lamp;
+    lampRelay.toggle();
+    syncLamp();
+}
 
-    relay.setLamp(appState.lamp);
+bool SmartHomeController::isLampOn() const
+{
+    return appState.lamp;
+}
 
-    dirty.smartHome = true;
+void SmartHomeController::turnFanOn()
+{
+    fanRelay.on();
+
+    irSender.sendPower();
+
+    syncFan();
+}
+
+void SmartHomeController::turnFanOff()
+{
+    fanRelay.off();
+
+    irSender.sendPower();
+
+    syncFan();
 }
 
 void SmartHomeController::toggleFan()
 {
-    appState.fan = !appState.fan;
+    fanRelay.toggle();
+    syncFan();
+}
 
-    relay.setFan(appState.fan);
+bool SmartHomeController::isFanOn() const
+{
+    return appState.fan;
+}
 
-    dirty.smartHome = true;
+void SmartHomeController::setFanSpeed(FanSpeed)
+{
+    // TODO
+}
+
+void SmartHomeController::setSwing(bool enable)
+{
+    if (enable)
+    {
+        irSender.sendSwing();
+    }
+
+    // TODO:
+    // Miyako remote uses toggle command.
+    // Need state synchronization.
+}
+
+void SmartHomeController::setMagicWind(bool enable)
+{
+    if (enable)
+    {
+        irSender.sendMagicWind();
+    }
+
+    // TODO:
+}
+
+void SmartHomeController::setTimer(uint8_t hour)
+{
+    // TODO:
+    // Repeat sendTimer() depending on protocol.
+}
+
+void SmartHomeController::sendPower()
+{
+    // TODO:
+}
+
+void SmartHomeController::sendSpeed(FanSpeed)
+{
+    // TODO:
+}
+
+void SmartHomeController::sendSwing()
+{
+    // TODO:
+}
+
+void SmartHomeController::sendMagicWind()
+{
+    // TODO:
+}
+
+void SmartHomeController::sendTimer(uint8_t)
+{
+    // TODO:
 }

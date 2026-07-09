@@ -1,14 +1,26 @@
 #pragma once
 
 #include <Arduino.h>
-#include "Pins.hpp"
 
 class RelayDriver
 {
 public:
+    explicit RelayDriver(uint8_t pin, bool activeLow = true);
+
     void begin();
 
-    void setLamp(bool on);
+    void on();
 
-    void setFan(bool on);
+    void off();
+
+    void toggle();
+
+    bool isOn() const;
+
+private:
+    uint8_t pin;
+
+    bool activeLow;
+
+    bool state = false;
 };

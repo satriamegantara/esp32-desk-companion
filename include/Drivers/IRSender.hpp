@@ -10,9 +10,7 @@ public:
 
     void begin();
 
-    void sendPowerOn();
-
-    void sendPowerOff();
+    void sendPower();
 
     void sendSwing();
 

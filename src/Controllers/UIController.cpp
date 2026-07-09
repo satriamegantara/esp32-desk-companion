@@ -32,7 +32,7 @@ void UIController::handleNavigation()
 {
   if (encoder.right())
   {
-    focusNext();
+    screenManager.nextWidget();
   }
 }
 

@@ -11,7 +11,7 @@ public:
 
     void end() override;
 
-    // void nextWidget() override;
-    // void previousWidget() override;
+    void nextWidget() override;
+    void previousWidget() override;
     // UIAction activateWidget() override;
 };

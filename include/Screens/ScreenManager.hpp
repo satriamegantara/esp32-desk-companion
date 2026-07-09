@@ -12,7 +12,9 @@ public:
     void update(LGFX &lcd);
     void nextScreen(LGFX &lcd);
 
-    // UIAction activateCurrentWidget();
+    void nextWidget();
+
+    void previousWidget();
 
 private:
     static constexpr uint8_t SCREEN_COUNT = 2;

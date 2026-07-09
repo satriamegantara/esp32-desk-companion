@@ -23,7 +23,7 @@ void SmartHomeWidget::draw(LGFX &lcd)
         Layout::SmartCard.w,
         Layout::SmartCard.h,
         10,
-        Theme::Primary);
+        selected ? Theme::Accent : Theme::Primary);
 
     lcd.setTextColor(Theme::White, Theme::Background);
     lcd.setFont(&fonts::Font2);
@@ -35,6 +35,10 @@ void SmartHomeWidget::draw(LGFX &lcd)
 
     drawLamp(lcd);
     drawFan(lcd);
+    drawSpeed(lcd);
+    drawSwing(lcd);
+    drawMagicWind(lcd);
+    drawTimer(lcd);
 }
 
 void SmartHomeWidget::update(LGFX &lcd)
@@ -44,6 +48,10 @@ void SmartHomeWidget::update(LGFX &lcd)
 
     drawLamp(lcd);
     drawFan(lcd);
+    drawSpeed(lcd);
+    drawSwing(lcd);
+    drawMagicWind(lcd);
+    drawTimer(lcd);
 
     dirty.smartHome = false;
 }
@@ -62,7 +70,7 @@ void SmartHomeWidget::drawLamp(LGFX &lcd)
     lcd.setTextColor(Theme::White, Theme::Background);
 
     // Arrow
-    if (appState.focus == FocusItem::Lamp)
+    if (selected)
         lcd.drawString(">", Layout::SmartArrowX, Layout::LampY);
 
     // Text
@@ -90,7 +98,7 @@ void SmartHomeWidget::drawFan(LGFX &lcd)
     lcd.setFont(&fonts::Font2);
     lcd.setTextColor(Theme::White, Theme::Background);
 
-    if (appState.focus == FocusItem::Fan)
+    if (selected)
         lcd.drawString(">", Layout::SmartArrowX, Layout::FanY);
 
     lcd.drawString(
@@ -102,4 +110,73 @@ void SmartHomeWidget::drawFan(LGFX &lcd)
         appState.fan ? "ON" : "OFF",
         Layout::SmartStateX,
         Layout::FanY);
+}
+
+void SmartHomeWidget::drawSpeed(LGFX &lcd)
+{
+    lcd.drawString(
+        "Speed",
+        Layout::SmartTextX,
+        Layout::SpeedY);
+
+    String text;
+
+    switch (appState.fanSpeed)
+    {
+    case FanSpeed::Low:
+        text = "LOW";
+        break;
+
+    case FanSpeed::Medium:
+        text = "MED";
+        break;
+
+    case FanSpeed::High:
+        text = "HIGH";
+        break;
+    }
+
+    lcd.drawRightString(
+        text,
+        Layout::SmartStateX,
+        Layout::SpeedY);
+}
+
+void SmartHomeWidget::drawSwing(LGFX &lcd)
+{
+    lcd.drawString(
+        "Swing",
+        Layout::SmartTextX,
+        Layout::SwingY);
+
+    lcd.drawRightString(
+        appState.swing ? "ON" : "OFF",
+        Layout::SmartStateX,
+        Layout::SwingY);
+}
+
+void SmartHomeWidget::drawMagicWind(LGFX &lcd)
+{
+    lcd.drawString(
+        "Magic Wind",
+        Layout::SmartTextX,
+        Layout::MagicWindY);
+
+    lcd.drawRightString(
+        appState.magicWind ? "ON" : "OFF",
+        Layout::SmartStateX,
+        Layout::MagicWindY);
+}
+
+void SmartHomeWidget::drawTimer(LGFX &lcd)
+{
+    lcd.drawString(
+        "Timer",
+        Layout::SmartTextX,
+        Layout::TimerY);
+
+    lcd.drawRightString(
+        String(appState.timerHour) + " H",
+        Layout::SmartStateX,
+        Layout::TimerY);
 }

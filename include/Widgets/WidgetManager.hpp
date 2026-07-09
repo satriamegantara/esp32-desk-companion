@@ -2,14 +2,18 @@
 
 #include "Widget.hpp"
 
-class WidgetContainer
+class WidgetManager
 {
 public:
     void add(Widget *widget);
-
     void draw(LGFX &lcd);
-
     void update(LGFX &lcd);
+    void clear();
+
+    void next();
+    void previous();
+
+    Widget *currentWidget() const;
 
 private:
     static constexpr uint8_t MAX_WIDGETS = 10;
@@ -17,4 +21,5 @@ private:
     Widget *widgets[MAX_WIDGETS];
 
     uint8_t count = 0;
+    uint8_t selectedIndex = 0;
 };
