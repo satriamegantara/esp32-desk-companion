@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Screen.hpp"
+#include "SmartHomeMenu.hpp"
 
 class SmartHomeScreen : public Screen
 {
@@ -9,8 +10,12 @@ public:
     void update(LGFX &lcd) override;
     void end() override {}
 
+    // Navigasi encoder
+    void nextWidget() override;
+    void previousWidget() override;
+
 private:
-    uint8_t selected = 0;
+    SmartHomeMenu selected = SmartHomeMenu::Lamp;
 
     void drawHeader(LGFX &lcd);
     void drawLamp(LGFX &lcd);

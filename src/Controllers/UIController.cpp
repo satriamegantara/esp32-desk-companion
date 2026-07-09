@@ -34,6 +34,11 @@ void UIController::handleNavigation()
   {
     screenManager.nextWidget();
   }
+
+  if (encoder.left())
+  {
+    screenManager.previousWidget();
+  }
 }
 
 void UIController::handleSelection(LGFX &lcd)

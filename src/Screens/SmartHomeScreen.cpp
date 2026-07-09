@@ -21,6 +21,17 @@ void SmartHomeScreen::begin(LGFX &lcd)
 
 void SmartHomeScreen::update(LGFX &lcd)
 {
+    lcd.fillScreen(Theme::Background);
+
+    drawHeader(lcd);
+
+    drawLamp(lcd);
+
+    drawFan(lcd);
+
+    drawSpeed(lcd);
+
+    drawSwing(lcd);
 }
 
 void SmartHomeScreen::drawHeader(LGFX &lcd)
@@ -41,7 +52,15 @@ void SmartHomeScreen::drawLamp(LGFX &lcd)
 
     lcd.setFont(&fonts::Font2);
 
-    lcd.drawString("> Lamp", Layout::SH_TextX, y);
+    String prefix =
+        selected == SmartHomeMenu::Lamp
+            ? "> "
+            : "  ";
+
+    lcd.drawString(
+        prefix + "Lamp",
+        Layout::SH_TextX,
+        y);
 
     lcd.drawRightString(
         appState.lamp ? "ON" : "OFF",
@@ -55,7 +74,15 @@ void SmartHomeScreen::drawFan(LGFX &lcd)
 
     lcd.setFont(&fonts::Font2);
 
-    lcd.drawString("  Fan", Layout::SH_TextX, y);
+    String prefix =
+        selected == SmartHomeMenu::Fan
+            ? "> "
+            : "  ";
+
+    lcd.drawString(
+        prefix + "Fan",
+        Layout::SH_TextX,
+        y);
 
     lcd.drawRightString(
         appState.fan ? "ON" : "OFF",
@@ -71,7 +98,10 @@ void SmartHomeScreen::drawSpeed(LGFX &lcd)
 
     lcd.setFont(&fonts::Font2);
 
-    lcd.drawString("  Speed", Layout::SH_TextX, y);
+    String prefix =
+        selected == SmartHomeMenu::Speed
+            ? "> "
+            : "  ";
 
     String text = "LOW";
 
@@ -90,6 +120,11 @@ void SmartHomeScreen::drawSpeed(LGFX &lcd)
         break;
     }
 
+    lcd.drawString(
+        prefix + "Speed",
+        Layout::SH_TextX,
+        y);
+
     lcd.drawRightString(
         text,
         Layout::SH_StateX,
@@ -104,10 +139,42 @@ void SmartHomeScreen::drawSwing(LGFX &lcd)
 
     lcd.setFont(&fonts::Font2);
 
-    lcd.drawString("  Swing", Layout::SH_TextX, y);
+    String prefix =
+        selected == SmartHomeMenu::Swing
+            ? "> "
+            : "  ";
+
+    lcd.drawString(
+        prefix + "Swing",
+        Layout::SH_TextX,
+        y);
 
     lcd.drawRightString(
         appState.swing ? "ON" : "OFF",
         Layout::SH_StateX,
         y);
+}
+
+void SmartHomeScreen::nextWidget()
+{
+    uint8_t index = static_cast<uint8_t>(selected);
+
+    index++;
+
+    if (index >= static_cast<uint8_t>(SmartHomeMenu::Count))
+        index = 0;
+
+    selected = static_cast<SmartHomeMenu>(index);
+}
+
+void SmartHomeScreen::previousWidget()
+{
+    int index = static_cast<int>(selected);
+
+    index--;
+
+    if (index < 0)
+        index = static_cast<int>(SmartHomeMenu::Count) - 1;
+
+    selected = static_cast<SmartHomeMenu>(index);
 }
