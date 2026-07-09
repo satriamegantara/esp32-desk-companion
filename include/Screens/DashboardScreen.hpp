@@ -15,6 +15,8 @@ public:
     void end() override;
 
 private:
+    int selectedWidget = 0;
+
     StatusBar statusBar;
 
     ClockWidget clockWidget;

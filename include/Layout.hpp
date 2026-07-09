@@ -1,20 +1,18 @@
 #pragma once
 
-struct Rect
-{
-    int x;
-    int y;
-    int w;
-    int h;
-};
+#include "Rect.hpp"
 
 namespace Layout
 {
-    constexpr Rect Header     = {  0,   0, 480,  40 };
+    extern Rect Header;
+    extern Rect ClockCard;
+    extern Rect SmartCard;
+    extern Rect Footer;
 
-    constexpr Rect ClockCard  = { 10,  55, 150, 190 };
+    constexpr int SmartArrowX = 185;
+    constexpr int SmartTextX = 205;
+    constexpr int SmartStateX = 430;
 
-    constexpr Rect SmartCard  = {170,  55, 300, 190 };
-
-    constexpr Rect Footer     = {  0, 285, 480,  35 };
+    constexpr int LampY = 115;
+    constexpr int FanY = 155;
 }

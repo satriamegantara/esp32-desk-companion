@@ -1,9 +1,17 @@
 #pragma once
 
-#include "LGFX_Config.hpp"
+#include "Widget.hpp"
 
-class FooterWidget
+class FooterWidget : public Widget
 {
 public:
-    void draw(LGFX &);
+    void draw(LGFX &lcd) override;
+
+    void update(LGFX &lcd) override;
+
+private:
+    float lastTemp = -999;
+    float lastHum = -999;
+    uint32_t lastHeap = 0;
+    bool lastWifi = false;
 };

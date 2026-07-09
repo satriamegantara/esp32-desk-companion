@@ -2,6 +2,18 @@
 
 #include <Arduino.h>
 
+enum class FocusItem
+{
+    Lamp,
+    Fan
+};
+
+enum class NavigationMode
+{
+    Dashboard,
+    Widget
+};
+
 struct AppState
 {
     // Clock
@@ -10,11 +22,14 @@ struct AppState
 
     // WiFi
     bool wifiConnected = false;
-    String ipAddress = "";
+    String ipAddress;
 
     // Smart Home
     bool lamp = false;
     bool fan = false;
+
+    FocusItem focus = FocusItem::Lamp;
+    NavigationMode navigationMode = NavigationMode::Dashboard;
 
     // Environment
     float temperature = 30.0;

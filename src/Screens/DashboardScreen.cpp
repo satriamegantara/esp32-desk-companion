@@ -13,6 +13,10 @@ void DashboardScreen::begin(LGFX &lcd)
 {
     lcd.fillScreen(Theme::Background);
 
+    clockWidget.setSelected(selectedWidget == 0);
+
+    smartHomeWidget.setSelected(selectedWidget == 1);
+
     statusBar.draw(lcd);
     clockWidget.draw(lcd);
     smartHomeWidget.draw(lcd);
@@ -32,22 +36,13 @@ void DashboardScreen::update(LGFX &lcd)
         dirty.header = false;
     }
 
-    if (dirty.clock)
-    {
-        clockWidget.draw(lcd);
-        dirty.clock = false;
-    }
+    clockWidget.update(lcd);
 
-    if (dirty.smartHome)
-    {
-        smartHomeWidget.draw(lcd);
-        dirty.smartHome = false;
-    }
+    smartHomeWidget.update(lcd);
 
     if (dirty.footer)
     {
-        footerWidget.draw(lcd);
-        dirty.footer = false;
+        footerWidget.update(lcd);
     }
 }
 

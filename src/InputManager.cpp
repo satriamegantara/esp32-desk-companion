@@ -1,15 +1,15 @@
 #include "InputManager.hpp"
-
+#include "Pins.hpp"
 #include <Arduino.h>
 
 void InputManager::begin()
 {
-    pinMode(0, INPUT_PULLUP);
+    pinMode(Pins::BootButton, INPUT_PULLUP);
 }
 
 void InputManager::update()
 {
-    bool now = digitalRead(0);
+    bool now = digitalRead(Pins::BootButton);
 
     bootPressed = (lastBoot == HIGH && now == LOW);
 

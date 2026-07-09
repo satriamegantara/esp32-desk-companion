@@ -13,6 +13,8 @@ public:
 
     bool press();
 
+    bool back();
+
 private:
     bool bootPressed = false;
 

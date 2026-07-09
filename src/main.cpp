@@ -1,10 +1,12 @@
 #include <Arduino.h>
 
-#include "LGFX_Config.hpp"
 #include "Application.hpp"
+#include "Screens/DashboardScreen.hpp"
 
 LGFX lcd;
 Application app;
+
+constexpr uint32_t FRAME_TIME = 16; // sekitar 60 FPS
 
 void setup()
 {
@@ -18,5 +20,11 @@ void setup()
 
 void loop()
 {
-    app.update(lcd);
+    static uint32_t lastFrame = 0;
+
+    if (millis() - lastFrame >= FRAME_TIME)
+    {
+        lastFrame = millis();
+        app.update(lcd);
+    }
 }

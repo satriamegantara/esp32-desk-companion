@@ -1,9 +1,14 @@
 #pragma once
 
-#include "LGFX_Config.hpp"
+#include "Widget.hpp"
 
-class SmartHomeWidget
+class SmartHomeWidget : public Widget
 {
 public:
-    void draw(LGFX &);
+    void draw(LGFX &lcd) override;
+    void update(LGFX &lcd) override;
+
+private:
+    void drawLamp(LGFX &lcd);
+    void drawFan(LGFX &lcd);
 };

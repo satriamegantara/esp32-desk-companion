@@ -25,6 +25,13 @@ void SystemScreen::begin(LGFX &lcd)
 
 void SystemScreen::update(LGFX &lcd)
 {
+    static uint32_t last = 0;
+
+    if (millis() - last < 1000)
+        return;
+
+    last = millis();
+
     lcd.fillRect(150, 70, 200, 150, TFT_NAVY);
 
     lcd.drawString(String(getCpuFrequencyMhz()) + " MHz", 150, 70);
