@@ -72,6 +72,8 @@ void ScreenManager::open(ScreenID screen, LGFX &lcd)
         break;
     }
 
+    lcd.fillScreen(Theme::Background);
+
     screens[current]->begin(lcd);
 }
 

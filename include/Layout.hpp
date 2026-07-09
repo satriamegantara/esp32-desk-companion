@@ -72,4 +72,11 @@ namespace Layout
     constexpr int CardRadius = 10;
     constexpr int TitlePadding = 15;
     constexpr int RowHeight = 35;
+
+    // Smart Home Screen
+    constexpr int SH_TitleY = 20;
+    constexpr int SH_StartY = 70;
+    constexpr int SH_RowHeight = 45;
+    constexpr int SH_TextX = 60;
+    constexpr int SH_StateX = 420;
 }
