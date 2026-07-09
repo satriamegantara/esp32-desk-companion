@@ -17,28 +17,34 @@ void SmartHomeWidget::draw(LGFX &lcd)
         Theme::Background);
 
     // Border
+    uint16_t borderColor =
+        selected
+            ? Theme::Accent
+            : Theme::Primary;
+
     lcd.drawRoundRect(
         Layout::SmartCard.x,
         Layout::SmartCard.y,
         Layout::SmartCard.w,
         Layout::SmartCard.h,
         10,
-        selected ? Theme::Accent : Theme::Primary);
+        borderColor);
 
     lcd.setTextColor(Theme::White, Theme::Background);
     lcd.setFont(&fonts::Font2);
 
     lcd.drawCentreString(
-        "SMART HOME",
+        "Smart Home",
         Layout::SmartCard.x + Layout::SmartCard.w / 2,
         Layout::SmartCard.y + 15);
 
     drawLamp(lcd);
+
     drawFan(lcd);
+
     drawSpeed(lcd);
+
     drawSwing(lcd);
-    drawMagicWind(lcd);
-    drawTimer(lcd);
 }
 
 void SmartHomeWidget::update(LGFX &lcd)
@@ -46,12 +52,21 @@ void SmartHomeWidget::update(LGFX &lcd)
     if (!dirty.smartHome)
         return;
 
+    uint16_t border =
+        selected ? Theme::Accent : Theme::Primary;
+
+    lcd.drawRoundRect(
+        Layout::SmartCard.x,
+        Layout::SmartCard.y,
+        Layout::SmartCard.w,
+        Layout::SmartCard.h,
+        10,
+        border);
+
     drawLamp(lcd);
     drawFan(lcd);
     drawSpeed(lcd);
     drawSwing(lcd);
-    drawMagicWind(lcd);
-    drawTimer(lcd);
 
     dirty.smartHome = false;
 }
@@ -60,18 +75,14 @@ void SmartHomeWidget::drawLamp(LGFX &lcd)
 {
     // Bersihkan hanya area baris lamp
     lcd.fillRect(
-        Layout::SmartArrowX,
+        Layout::SmartTextX,
         Layout::LampY - 2,
-        Layout::SmartStateX - Layout::SmartArrowX + 20,
+        Layout::SmartStateX - Layout::SmartTextX + 20,
         28,
         Theme::Background);
 
     lcd.setFont(&fonts::Font2);
     lcd.setTextColor(Theme::White, Theme::Background);
-
-    // Arrow
-    if (selected)
-        lcd.drawString(">", Layout::SmartArrowX, Layout::LampY);
 
     // Text
     lcd.drawString(
@@ -89,17 +100,14 @@ void SmartHomeWidget::drawLamp(LGFX &lcd)
 void SmartHomeWidget::drawFan(LGFX &lcd)
 {
     lcd.fillRect(
-        Layout::SmartArrowX,
+        Layout::SmartTextX,
         Layout::FanY - 2,
-        Layout::SmartStateX - Layout::SmartArrowX + 20,
+        Layout::SmartStateX - Layout::SmartTextX + 20,
         28,
         Theme::Background);
 
     lcd.setFont(&fonts::Font2);
     lcd.setTextColor(Theme::White, Theme::Background);
-
-    if (selected)
-        lcd.drawString(">", Layout::SmartArrowX, Layout::FanY);
 
     lcd.drawString(
         "Fan",
@@ -114,6 +122,13 @@ void SmartHomeWidget::drawFan(LGFX &lcd)
 
 void SmartHomeWidget::drawSpeed(LGFX &lcd)
 {
+    lcd.fillRect(
+        Layout::SmartTextX,
+        Layout::SpeedY - 2,
+        Layout::SmartStateX - Layout::SmartTextX + 20,
+        28,
+        Theme::Background);
+
     lcd.drawString(
         "Speed",
         Layout::SmartTextX,
@@ -140,10 +155,23 @@ void SmartHomeWidget::drawSpeed(LGFX &lcd)
         text,
         Layout::SmartStateX,
         Layout::SpeedY);
+
+    lcd.drawFastHLine(
+        Layout::SmartCard.x + 20,
+        182,
+        Layout::SmartCard.w - 40,
+        TFT_DARKGREY);
 }
 
 void SmartHomeWidget::drawSwing(LGFX &lcd)
 {
+    lcd.fillRect(
+        Layout::SmartTextX,
+        Layout::SpeedY - 2,
+        Layout::SmartStateX - Layout::SmartTextX + 20,
+        28,
+        Theme::Background);
+
     lcd.drawString(
         "Swing",
         Layout::SmartTextX,
@@ -157,6 +185,13 @@ void SmartHomeWidget::drawSwing(LGFX &lcd)
 
 void SmartHomeWidget::drawMagicWind(LGFX &lcd)
 {
+    lcd.fillRect(
+        Layout::SmartTextX,
+        Layout::SpeedY - 2,
+        Layout::SmartStateX - Layout::SmartTextX + 20,
+        28,
+        Theme::Background);
+
     lcd.drawString(
         "Magic Wind",
         Layout::SmartTextX,
@@ -170,6 +205,13 @@ void SmartHomeWidget::drawMagicWind(LGFX &lcd)
 
 void SmartHomeWidget::drawTimer(LGFX &lcd)
 {
+    lcd.fillRect(
+        Layout::SmartTextX,
+        Layout::SpeedY - 2,
+        Layout::SmartStateX - Layout::SmartTextX + 20,
+        28,
+        Theme::Background);
+
     lcd.drawString(
         "Timer",
         Layout::SmartTextX,

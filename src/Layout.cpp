@@ -4,9 +4,24 @@ namespace Layout
 {
     Rect Header = {0, 0, 480, 35};
 
-    Rect ClockCard = {10, 45, 150, 180};
+    Rect ClockCard =
+        {
+            20,
+            40,
+            150,
+            190};
 
-    Rect SmartCard = {180, 45, 290, 180};
+    Rect SmartCard =
+        {
+            180,
+            40,
+            280,
+            190};
 
-    Rect Footer = {0, 290, 480, 30};
+    Rect Footer =
+        {
+            0,
+            285,
+            480,
+            35};
 }

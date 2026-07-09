@@ -17,6 +17,7 @@ public:
 
     void nextWidget() override;
     void previousWidget() override;
+    void updateSelection();
 
 private:
     StatusBar statusBar;

@@ -1,14 +1,16 @@
 #include "Controllers/CameraController.hpp"
+#include "AppState.hpp"
 
 void CameraController::begin()
 {
+    appState.cameraState = CameraState::Mock;
 }
 
 void CameraController::update()
 {
 }
 
-bool CameraController::connected() const
+CameraState CameraController::state() const
 {
-    return cameraConnected;
+    return cameraState;
 }

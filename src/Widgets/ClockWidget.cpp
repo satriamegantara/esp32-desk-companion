@@ -29,7 +29,7 @@ void ClockWidget::draw(LGFX &lcd)
         Layout::ClockCard.x + Layout::ClockCard.w / 2,
         Layout::ClockCard.y + ClockLayout::TitleYOffset);
 
-    lcd.setTextColor(Theme::White);
+    lcd.setTextColor(Theme::White, Theme::Background);
 
     lcd.setFont(&fonts::Font2);
 
@@ -41,17 +41,23 @@ void ClockWidget::draw(LGFX &lcd)
 
     lcd.setFont(&fonts::Font6);
 
+    int hmWidth = lcd.textWidth(hm);
+
+    int startX =
+        Layout::ClockCard.x +
+        (Layout::ClockCard.w - hmWidth - 15) / 2;
+
     lcd.drawString(
         hm,
-        x + 18,
-        y + 58);
+        startX,
+        y + ClockLayout::TimeYOffset);
 
-    lcd.setFont(&fonts::Font4);
+    lcd.setFont(&fonts::Font2);
 
     lcd.drawString(
         sec,
-        x + 118,
-        y + 82);
+        startX + hmWidth + ClockLayout::SecondGap,
+        y + ClockLayout::TimeYOffset + ClockLayout::SecondYOffset);
 
     lcd.setFont(&fonts::Font2);
     lcd.drawCentreString(
@@ -62,11 +68,19 @@ void ClockWidget::draw(LGFX &lcd)
 
 void ClockWidget::update(LGFX &lcd)
 {
-    if (!dirty.clock)
-        return;
+    uint16_t border =
+        selected ? Theme::Accent
+                 : Theme::Primary;
 
-    if (lastTime == appState.time &&
-        lastDay == appState.day)
+    lcd.drawRoundRect(
+        Layout::ClockCard.x,
+        Layout::ClockCard.y,
+        Layout::ClockCard.w,
+        Layout::ClockCard.h,
+        10,
+        border);
+
+    if (!dirty.clock)
         return;
 
     lcd.setTextColor(
@@ -75,7 +89,9 @@ void ClockWidget::update(LGFX &lcd)
 
     lcd.setFont(&fonts::Font6);
 
-    String sec = appState.time.substring(6, 8);
+    if (lastTime == appState.time &&
+        lastDay == appState.day)
+        return;
 
     lcd.fillRect(
         Layout::ClockCard.x +
@@ -91,16 +107,26 @@ void ClockWidget::update(LGFX &lcd)
 
         Theme::Background);
 
+    lcd.fillRect(
+        Layout::ClockCard.x + 10,
+        Layout::ClockCard.y + 130,
+        Layout::ClockCard.w - 20,
+        25,
+        Theme::Background);
+
+    lcd.setFont(&fonts::Font6);
+
+    String sec = appState.time.substring(6, 8);
+
     String hm = appState.time.substring(0, 5);
 
     lcd.setFont(&fonts::Font6);
 
-    int w = lcd.textWidth(hm);
     int hmWidth = lcd.textWidth(hm);
 
     int startX =
         Layout::ClockCard.x +
-        (Layout::ClockCard.w - hmWidth - 20) / 2;
+        (Layout::ClockCard.w - hmWidth - 15) / 2;
 
     lcd.drawString(
         hm,
@@ -115,13 +141,6 @@ void ClockWidget::update(LGFX &lcd)
         Layout::ClockCard.y +
             ClockLayout::TimeYOffset +
             ClockLayout::SecondYOffset);
-
-    lcd.fillRect(
-        Layout::ClockCard.x + 10,
-        Layout::ClockCard.y + 130,
-        Layout::ClockCard.w - 20,
-        25,
-        Theme::Background);
 
     lcd.setFont(&fonts::Font2);
 

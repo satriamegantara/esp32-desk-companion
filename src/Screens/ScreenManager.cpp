@@ -3,7 +3,8 @@
 void ScreenManager::begin(LGFX &lcd)
 {
     screens[0] = &dashboard;
-    screens[1] = &system;
+    screens[1] = &camera;
+    screens[2] = &system;
 
     current = 0;
 

@@ -4,20 +4,72 @@
 
 namespace Layout
 {
+
+    constexpr int SmartArrowX = 185;
+
+    //=========================
+    // Header
+    //=========================
     extern Rect Header;
+
+    //=========================
+    // Dashboard Cards
+    //=========================
     extern Rect ClockCard;
     extern Rect SmartCard;
     extern Rect Footer;
 
-    constexpr int SmartArrowX = 185;
-    constexpr int SmartTextX = 205;
-    constexpr int SmartStateX = 430;
+    //=========================
+    // Global Padding
+    //=========================
+    constexpr int CardPadding = 16;
 
-    constexpr int LampY = 115;
-    constexpr int FanY = 155;
+    //=========================
+    // Smart Home
+    //=========================
 
-    constexpr int SpeedY = 195;
-    constexpr int SwingY = 235;
-    constexpr int MagicWindY = 275;
-    constexpr int TimerY = 315;
+    constexpr int SmartTextX = 200;
+    constexpr int SmartStateX = 425;
+
+    constexpr int LampY = 90;
+    constexpr int FanY = 125;
+    constexpr int SpeedY = 160;
+    constexpr int SwingY = 195;
+
+    // Jangan dipakai di Dashboard lagi
+    constexpr int MagicWindY = 235;
+    constexpr int TimerY = 270;
+
+    //=========================
+    // Camera
+    //=========================
+
+    constexpr Rect CameraCard =
+        {
+            20,
+            40,
+            440,
+            240};
+
+    constexpr int CameraTitleY = 15;
+
+    constexpr int CameraStatusY = 255;
+
+    constexpr int CameraFPSY = 280;
+
+    constexpr int CameraSizeY = 305;
+
+    // Footer
+    constexpr int FooterCol1 = 60;
+    constexpr int FooterCol2 = 180;
+    constexpr int FooterCol3 = 300;
+    constexpr int FooterCol4 = 420;
+
+    constexpr int FooterTextY = 296;
+
+    constexpr int Margin = 20;
+    constexpr int CardGap = 20;
+    constexpr int CardRadius = 10;
+    constexpr int TitlePadding = 15;
+    constexpr int RowHeight = 35;
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Drivers/MJPEGClient.hpp"
+#include "CameraState.hpp"
 
 class CameraController
 {
@@ -9,9 +9,9 @@ public:
 
     void update();
 
-    bool connected() const;
+    CameraState state() const;
 
 private:
-    bool cameraConnected = false;
-    MJPEGClient client;
+    CameraState cameraState =
+        CameraState::Mock;
 };

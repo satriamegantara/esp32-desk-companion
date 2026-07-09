@@ -13,15 +13,16 @@ void DashboardScreen::begin(LGFX &lcd)
 {
     lcd.fillScreen(Theme::Background);
 
+    statusBar.draw(lcd);
+
+    footerWidget.draw(lcd);
+
     widgetManager.clear();
 
-    widgetManager.add(&statusBar);
     widgetManager.add(&clockWidget);
     widgetManager.add(&smartHomeWidget);
-    widgetManager.add(&footerWidget);
 
-    if (widgetManager.currentWidget())
-        widgetManager.currentWidget()->setSelected(true);
+    updateSelection();
 
     widgetManager.draw(lcd);
 
@@ -44,16 +45,32 @@ void DashboardScreen::nextWidget()
 {
     widgetManager.next();
 
-    dirty.smartHome = true;
-
-    dirty.clock = true;
+    updateSelection();
 }
 
 void DashboardScreen::previousWidget()
 {
     widgetManager.previous();
 
-    dirty.smartHome = true;
+    updateSelection();
+}
 
+void DashboardScreen::updateSelection()
+{
+    statusBar.setSelected(false);
+    clockWidget.setSelected(false);
+    smartHomeWidget.setSelected(false);
+    footerWidget.setSelected(false);
+
+    Widget *current = widgetManager.currentWidget();
+
+    if (current)
+    {
+        current->setSelected(true);
+    }
+
+    dirty.header = true;
     dirty.clock = true;
+    dirty.smartHome = true;
+    dirty.footer = true;
 }

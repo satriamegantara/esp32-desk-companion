@@ -34,54 +34,32 @@ void FooterWidget::update(LGFX &lcd)
         Theme::Header);
 
     lcd.fillRect(
-        25,
-        294,
-        90,
-        18,
+        Layout::Footer.x,
+        Layout::Footer.y,
+        Layout::Footer.w,
+        Layout::Footer.h,
         Theme::Header);
 
-    lcd.drawString(
-        String(appState.temperature, 1) + " C",
-        25,
-        296);
+    lcd.drawCentreString(
+        String(appState.temperature, 1) + "C",
+        Layout::FooterCol1,
+        Layout::FooterTextY);
 
-    lcd.fillRect(
-        150,
-        294,
-        90,
-        18,
-        Theme::Header);
+    lcd.drawCentreString(
+        String(appState.humidity, 1) + "%",
+        Layout::FooterCol2,
+        Layout::FooterTextY);
 
-    lcd.drawString(
-        String(appState.humidity, 1) + " %",
-        150,
-        296);
-
-    lcd.fillRect(
-        275,
-        294,
-        90,
-        18,
-        Theme::Header);
-
-    lcd.drawString(
+    lcd.drawCentreString(
         String(appState.freeHeap) + " KB",
-        275,
-        296);
+        Layout::FooterCol3,
+        Layout::FooterTextY);
 
-    lcd.fillRect(
-        380,
-        294,
-        120,
-        18,
-        Theme::Header);
-
-    lcd.drawString(
-        appState.wifiConnected
-            ? "WiFi Online"
-            : "WiFi Offline",
-        380,
-        296);
+    lcd.drawCentreString(
+        appState.wifiConnected ? "ONLINE"
+                               : "OFFLINE",
+        Layout::FooterCol4,
+        Layout::FooterTextY);
 
     dirty.footer = false;
 }

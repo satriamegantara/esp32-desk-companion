@@ -11,6 +11,21 @@ protected:
     bool visible = true;
     Rect bounds;
 
+    void drawBorder(
+        LGFX &lcd,
+        const Rect &rect)
+    {
+        lcd.drawRoundRect(
+            rect.x,
+            rect.y,
+            rect.w,
+            rect.h,
+            10,
+            selected
+                ? Theme::Accent
+                : Theme::Primary);
+    }
+
 public:
     virtual ~Widget() {}
 

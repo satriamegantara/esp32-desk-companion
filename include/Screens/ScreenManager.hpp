@@ -4,6 +4,7 @@
 
 #include "DashboardScreen.hpp"
 #include "SystemScreen.hpp"
+#include "CameraScreen.hpp"
 
 class ScreenManager
 {
@@ -17,9 +18,11 @@ public:
     void previousWidget();
 
 private:
-    static constexpr uint8_t SCREEN_COUNT = 2;
+    static constexpr uint8_t SCREEN_COUNT = 3;
 
     DashboardScreen dashboard;
+
+    CameraScreen camera;
 
     SystemScreen system;
 

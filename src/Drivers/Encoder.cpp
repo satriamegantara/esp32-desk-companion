@@ -14,20 +14,6 @@ void Encoder::update()
 {
     static uint32_t lastPrint = 0;
 
-    if (millis() - lastPrint > 500)
-    {
-        lastPrint = millis();
-
-        Serial.print("CLK=");
-        Serial.print(digitalRead(Pins::EncoderCLK));
-
-        Serial.print(" DT=");
-        Serial.print(digitalRead(Pins::EncoderDT));
-
-        Serial.print(" SW=");
-        Serial.println(digitalRead(Pins::EncoderSW));
-    }
-
     leftFlag = false;
     rightFlag = false;
     pressFlag = false;

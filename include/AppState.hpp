@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Arduino.h>
+#include "CameraState.hpp"
+#include "WeatherState.hpp"
 
 enum class FocusItem
 {
@@ -24,7 +26,7 @@ enum class FanSpeed
 struct AppState
 {
     // Clock
-    String time = "21:35";
+    String time = "21:35:23";
     String day = "Monday";
 
     // WiFi
@@ -46,13 +48,17 @@ struct AppState
     uint32_t freeHeap = 0;
     uint32_t uptime = 0;
 
+    // Fan
     FanSpeed fanSpeed = FanSpeed::Low;
-
     bool swing = false;
-
     bool magicWind = false;
-
     uint8_t timerHour = 0;
+
+    // Camera
+    CameraState cameraState = CameraState::Mock;
+
+    // Weather
+    WeatherData weather;
 };
 
 extern AppState appState;

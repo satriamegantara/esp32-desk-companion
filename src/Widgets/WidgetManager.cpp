@@ -29,6 +29,7 @@ void WidgetManager::update(LGFX &lcd)
 void WidgetManager::clear()
 {
     count = 0;
+    selectedIndex = 0;
 }
 
 void WidgetManager::next()

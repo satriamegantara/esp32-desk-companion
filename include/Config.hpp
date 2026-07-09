@@ -16,4 +16,6 @@ namespace Config
     constexpr const char *CameraHost = "deskmatecam.local";
     constexpr uint16_t CameraPort = 81;
     constexpr const char *CameraPath = "/stream";
+
+    constexpr bool CameraMock = true;
 }
