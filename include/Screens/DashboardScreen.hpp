@@ -31,10 +31,10 @@ private:
         HomePage::Dashboard;
 
     void nextPage();
-
     void previousPage();
-
     HomePage page() const;
+    bool isDashboardPage() const;
+    bool isWeatherPage() const;
 
     StatusBar statusBar;
     ClockWidget clockWidget;

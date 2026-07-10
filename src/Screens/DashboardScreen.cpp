@@ -64,11 +64,39 @@ void DashboardScreen::nextWidget()
 
     widgetManager.next();
 
+    if (widgetManager.selectedIndex() == 0 &&
+        currentPage == HomePage::Dashboard)
+    {
+        currentPage = HomePage::Weather;
+
+        // sementara cukup redraw penuh
+        dirty.clock = true;
+        dirty.smartHome = true;
+        dirty.camera = true;
+        dirty.system = true;
+        dirty.footer = true;
+
+        return;
+    }
+
     updateSelection();
 }
 
 void DashboardScreen::previousWidget()
 {
+    if (currentPage == HomePage::Weather)
+    {
+        currentPage = HomePage::Dashboard;
+
+        dirty.clock = true;
+        dirty.smartHome = true;
+        dirty.camera = true;
+        dirty.system = true;
+        dirty.footer = true;
+
+        return;
+    }
+
     widgetManager.previous();
 
     updateSelection();
@@ -116,4 +144,14 @@ void DashboardScreen::previousPage()
 HomePage DashboardScreen::page() const
 {
     return currentPage;
+}
+
+bool DashboardScreen::isDashboardPage() const
+{
+    return currentPage == HomePage::Dashboard;
+}
+
+bool DashboardScreen::isWeatherPage() const
+{
+    return currentPage == HomePage::Weather;
 }
