@@ -99,3 +99,21 @@ ScreenID DashboardScreen::selectedScreen() const
 {
     return widgetManager.currentTarget();
 }
+
+void DashboardScreen::nextPage()
+{
+    if (currentPage == HomePage::Dashboard)
+        currentPage = HomePage::Weather;
+    else
+        currentPage = HomePage::Dashboard;
+}
+
+void DashboardScreen::previousPage()
+{
+    nextPage();
+}
+
+HomePage DashboardScreen::page() const
+{
+    return currentPage;
+}

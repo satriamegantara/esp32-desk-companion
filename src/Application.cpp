@@ -17,6 +17,7 @@ void Application::begin(LGFX &lcd)
     clock.begin();
     encoder.begin();
     environment.begin();
+    weather.begin();
     system.begin();
     smartHome.begin();
     irReceiver.begin();
@@ -32,6 +33,7 @@ void Application::update(LGFX &lcd)
     wifiManager.update();
     clock.update();
     environment.update();
+    weather.update();
     system.update();
     irReceiver.update();
     camera.update();
@@ -40,13 +42,6 @@ void Application::update(LGFX &lcd)
 
     appState.ipAddress = wifiManager.ip();
 
-    static uint32_t lastUpdate = 0;
-
-    if (millis() - lastUpdate >= 1000)
-    {
-        lastUpdate = millis();
-        dirty.footer = true;
-    }
-    uiController.update(lcd);
+        uiController.update(lcd);
     uiController.render(lcd);
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Screen.hpp"
+#include "Screens/HomePage.hpp"
 
 #include "Widgets/StatusBar.hpp"
 #include "Widgets/ClockWidget.hpp"
@@ -26,6 +27,15 @@ public:
     uint8_t selectedWidget() const;
 
 private:
+    HomePage currentPage =
+        HomePage::Dashboard;
+
+    void nextPage();
+
+    void previousPage();
+
+    HomePage page() const;
+
     StatusBar statusBar;
     ClockWidget clockWidget;
     SmartHomeWidget smartHomeWidget;

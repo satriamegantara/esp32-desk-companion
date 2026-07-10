@@ -14,6 +14,7 @@
 #include "Controllers/UIController.hpp"
 #include "Controllers/CameraController.hpp"
 #include "Controllers/SystemController.hpp"
+#include "Controllers/WeatherController.hpp"
 
 class Application
 {
@@ -34,6 +35,7 @@ private:
     IRSender irSender;
 
     EnvironmentController environment;
+    WeatherController weather;
     SystemController system;
     ClockController clock;
     CameraController camera;
