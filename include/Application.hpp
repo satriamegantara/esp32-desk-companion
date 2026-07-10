@@ -13,6 +13,7 @@
 #include "Controllers/ClockController.hpp"
 #include "Controllers/UIController.hpp"
 #include "Controllers/CameraController.hpp"
+#include "Controllers/SystemController.hpp"
 
 class Application
 {
@@ -33,6 +34,7 @@ private:
     IRSender irSender;
 
     EnvironmentController environment;
+    SystemController system;
     ClockController clock;
     CameraController camera;
 };
