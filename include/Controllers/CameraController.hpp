@@ -1,7 +1,5 @@
 #pragma once
 
-#include "CameraState.hpp"
-
 class CameraController
 {
 public:
@@ -9,9 +7,8 @@ public:
 
     void update();
 
-    CameraState state() const;
+    bool connected() const;
 
 private:
-    CameraState cameraState =
-        CameraState::Mock;
+    bool online = false;
 };

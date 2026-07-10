@@ -16,5 +16,6 @@ namespace Theme
     constexpr uint16_t Gray = TFT_LIGHTGREY;
 
     constexpr uint16_t Success = TFT_GREEN;
-    constexpr uint16_t Danger = TFT_RED;
+    constexpr uint16_t Error = TFT_RED;
+    constexpr uint16_t Border = TFT_DARKGREY;
 }

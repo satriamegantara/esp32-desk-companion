@@ -5,8 +5,10 @@
 class SmartHomeWidget : public Widget
 {
 public:
+    SmartHomeWidget();
     void draw(LGFX &lcd) override;
     void update(LGFX &lcd) override;
+    ScreenID targetScreen() const override;
 
 private:
     void drawLamp(LGFX &lcd);
@@ -20,4 +22,5 @@ private:
         const char *label,
         const String &value,
         int y);
+    bool lastSelected = false;
 };

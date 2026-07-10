@@ -12,6 +12,10 @@ void StatusBar::draw(LGFX &lcd)
         Layout::Header.h,
         Theme::Background);
 
+    lcd.setTextColor(
+        Theme::White,
+        Theme::Background);
+
     // Judul
     lcd.drawString("DeskMate", 10, 10);
 

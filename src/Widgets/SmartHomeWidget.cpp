@@ -7,28 +7,7 @@
 
 void SmartHomeWidget::draw(LGFX &lcd)
 {
-    // Background card
-    lcd.fillRoundRect(
-        Layout::SmartCard.x,
-        Layout::SmartCard.y,
-        Layout::SmartCard.w,
-        Layout::SmartCard.h,
-        10,
-        Theme::Background);
-
-    // Border
-    uint16_t borderColor =
-        selected
-            ? Theme::Accent
-            : Theme::Primary;
-
-    lcd.drawRoundRect(
-        Layout::SmartCard.x,
-        Layout::SmartCard.y,
-        Layout::SmartCard.w,
-        Layout::SmartCard.h,
-        10,
-        borderColor);
+    drawCard(lcd);
 
     lcd.setTextColor(Theme::White, Theme::Background);
     lcd.setFont(&fonts::Font2);
@@ -49,19 +28,17 @@ void SmartHomeWidget::draw(LGFX &lcd)
 
 void SmartHomeWidget::update(LGFX &lcd)
 {
+    if (selectionChanged())
+    {
+        drawBorder(
+            lcd,
+            bounds);
+
+        lastSelected = selected;
+    }
+
     if (!dirty.smartHome)
         return;
-
-    uint16_t border =
-        selected ? Theme::Accent : Theme::Primary;
-
-    lcd.drawRoundRect(
-        Layout::SmartCard.x,
-        Layout::SmartCard.y,
-        Layout::SmartCard.w,
-        Layout::SmartCard.h,
-        10,
-        border);
 
     drawLamp(lcd);
     drawFan(lcd);
@@ -195,4 +172,15 @@ void SmartHomeWidget::drawRow(LGFX &lcd, const char *label, const String &value,
 
     lcd.drawString(label, Layout::SmartTextX, y);
     lcd.drawRightString(value, Layout::SmartStateX, y);
+}
+
+SmartHomeWidget::SmartHomeWidget()
+{
+    setBounds(
+        Layout::SmartCard);
+}
+
+ScreenID SmartHomeWidget::targetScreen() const
+{
+    return ScreenID::SmartHome;
 }

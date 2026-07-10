@@ -7,6 +7,8 @@
 #include "Widgets/SmartHomeWidget.hpp"
 #include "Widgets/FooterWidget.hpp"
 #include "Widgets/WidgetManager.hpp"
+#include "Widgets/CameraWidget.hpp"
+#include "Widgets/SystemWidget.hpp"
 
 class DashboardScreen : public Screen
 {
@@ -19,6 +21,8 @@ public:
     void previousWidget() override;
     void updateSelection();
 
+    ScreenID selectedScreen() const;
+
     uint8_t selectedWidget() const;
 
 private:
@@ -26,6 +30,8 @@ private:
     ClockWidget clockWidget;
     SmartHomeWidget smartHomeWidget;
     FooterWidget footerWidget;
+    CameraWidget cameraWidget;
+    SystemWidget systemWidget;
 
     WidgetManager widgetManager;
 };

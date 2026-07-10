@@ -13,4 +13,9 @@ public:
 
     void nextWidget() override;
     void previousWidget() override;
+
+private:
+    bool backSelected = true;
+
+    void drawBack(LGFX &lcd);
 };

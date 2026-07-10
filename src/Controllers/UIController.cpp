@@ -48,21 +48,34 @@ void UIController::handleSelection(LGFX &lcd)
 
   if (screenManager.currentScreen() == ScreenID::Dashboard)
   {
-    uint8_t selected =
-        screenManager.getDashboard().selectedWidget();
+    uint8_t selected = screenManager.getDashboard().selectedWidget();
 
-    if (selected == 1)
+    if (screenManager.currentScreen() == ScreenID::Dashboard)
     {
       screenManager.open(
-          ScreenID::SmartHome,
+          screenManager
+              .dashboardScreen()
+              .selectedScreen(),
           lcd);
+
+      return;
     }
+
+    screenManager.activateCurrent();
 
     return;
   }
 
-  // Semua screen selain Dashboard
-  screenManager.activateCurrent();
+  if (screenManager.currentScreen() == ScreenID::SmartHome)
+  {
+    if (screenManager.smartHomeScreen().currentMenu() == SmartHomeMenu::Back)
+    {
+      screenManager.open(ScreenID::Dashboard, lcd);
+      return;
+    }
+
+    screenManager.activateCurrent();
+  }
 }
 
 void UIController::handleBootButton()

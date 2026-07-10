@@ -47,3 +47,18 @@ void IRSender::sendMagicWind()
 {
     irsend.sendSymphony(0xD84, 12);
 }
+
+void IRSender::sendLow()
+{
+    // TODO raw code
+}
+
+void IRSender::sendMedium()
+{
+    // TODO raw code
+}
+
+void IRSender::sendHigh()
+{
+    // TODO raw code
+}

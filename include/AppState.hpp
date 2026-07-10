@@ -47,6 +47,9 @@ struct AppState
     // System
     uint32_t freeHeap = 0;
     uint32_t uptime = 0;
+    uint16_t cpuFreq = 0;
+    uint32_t psramSize = 0;
+    uint32_t flashSize = 0;
 
     // Fan
     FanSpeed fanSpeed = FanSpeed::Low;
@@ -59,6 +62,9 @@ struct AppState
 
     // Weather
     WeatherData weather;
+
+    NavigationMode navigation =
+        NavigationMode::Dashboard;
 };
 
 extern AppState appState;

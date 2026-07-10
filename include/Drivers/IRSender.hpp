@@ -18,6 +18,10 @@ public:
 
     void sendMagicWind();
 
+    void sendLow();
+    void sendMedium();
+    void sendHigh();
+
 private:
     IRsend irsend;
 };

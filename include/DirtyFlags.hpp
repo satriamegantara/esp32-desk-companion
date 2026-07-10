@@ -9,6 +9,10 @@ struct DirtyFlags
     bool smartHome = true;
 
     bool footer = true;
+
+    bool camera = true;
+
+    bool system = true;
 };
 
 extern DirtyFlags dirty;

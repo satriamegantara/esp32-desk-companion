@@ -3,6 +3,8 @@
 #include "LGFX_Config.hpp"
 #include "Rect.hpp"
 #include "Theme.hpp"
+#include "Layout.hpp"
+#include "ScreenID.hpp"
 
 class Widget
 {
@@ -11,6 +13,28 @@ protected:
     bool focused = false;
     bool visible = true;
     Rect bounds;
+
+    void setBounds(const Rect &rect)
+    {
+        bounds = rect;
+    }
+
+    void drawCard(
+        LGFX &lcd,
+        uint16_t bg = Theme::Background)
+    {
+        lcd.fillRoundRect(
+            bounds.x,
+            bounds.y,
+            bounds.w,
+            bounds.h,
+            Layout::CardRadius,
+            bg);
+
+        drawBorder(
+            lcd,
+            bounds);
+    }
 
     void drawBorder(
         LGFX &lcd,
@@ -21,10 +45,21 @@ protected:
             rect.y,
             rect.w,
             rect.h,
-            10,
+            Layout::CardRadius,
             selected
                 ? Theme::Accent
                 : Theme::Primary);
+    }
+
+    bool selectionChanged()
+    {
+        if (lastSelected != selected)
+        {
+            lastSelected = selected;
+            return true;
+        }
+
+        return false;
     }
 
 public:
@@ -32,6 +67,8 @@ public:
 
     virtual void draw(LGFX &lcd) = 0;
     virtual void update(LGFX &lcd) = 0;
+
+    bool lastSelected = false;
 
     void setSelected(bool s)
     {
@@ -61,5 +98,20 @@ public:
     bool isVisible() const
     {
         return visible;
+    }
+
+    virtual void onSelected()
+    {
+        selected = true;
+    }
+
+    virtual void onDeselected()
+    {
+        selected = false;
+    }
+
+    virtual ScreenID targetScreen() const
+    {
+        return ScreenID::Dashboard;
     }
 };

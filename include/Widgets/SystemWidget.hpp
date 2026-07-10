@@ -2,10 +2,10 @@
 
 #include "Widget.hpp"
 
-class CameraWidget : public Widget
+class SystemWidget : public Widget
 {
 public:
-    CameraWidget();
+    SystemWidget();
 
     void draw(LGFX &lcd) override;
     void update(LGFX &lcd) override;

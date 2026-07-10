@@ -17,6 +17,8 @@ public:
 
     uint8_t selectedIndex() const;
 
+    ScreenID currentTarget() const;
+
 private:
     static constexpr uint8_t MAX_WIDGETS = 10;
 

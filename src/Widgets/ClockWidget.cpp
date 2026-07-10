@@ -8,24 +8,14 @@
 
 void ClockWidget::draw(LGFX &lcd)
 {
-    lcd.fillRoundRect(
-        Layout::ClockCard.x,
-        Layout::ClockCard.y,
-        Layout::ClockCard.w,
-        Layout::ClockCard.h,
-        10,
-        Theme::Background);
+    drawCard(lcd);
 
-    lcd.drawRoundRect(
-        Layout::ClockCard.x,
-        Layout::ClockCard.y,
-        Layout::ClockCard.w,
-        Layout::ClockCard.h,
-        10,
-        Theme::Primary);
+    lcd.setFont(&fonts::Font2);
+
+    lcd.setTextColor(Theme::White, Theme::Background);
 
     lcd.drawCentreString(
-        "CLOCK",
+        "Clock",
         Layout::ClockCard.x + Layout::ClockCard.w / 2,
         Layout::ClockCard.y + ClockLayout::TitleYOffset);
 
@@ -68,17 +58,14 @@ void ClockWidget::draw(LGFX &lcd)
 
 void ClockWidget::update(LGFX &lcd)
 {
-    uint16_t border =
-        selected ? Theme::Accent
-                 : Theme::Primary;
+    if (selectionChanged())
+    {
+        drawBorder(
+            lcd,
+            bounds);
 
-    lcd.drawRoundRect(
-        Layout::ClockCard.x,
-        Layout::ClockCard.y,
-        Layout::ClockCard.w,
-        Layout::ClockCard.h,
-        10,
-        border);
+        lastSelected = selected;
+    }
 
     if (!dirty.clock)
         return;
@@ -154,4 +141,15 @@ void ClockWidget::update(LGFX &lcd)
     lastDay = appState.day;
 
     dirty.clock = false;
+}
+
+ClockWidget::ClockWidget()
+{
+    setBounds(
+        Layout::ClockCard);
+}
+
+ScreenID ClockWidget::targetScreen() const
+{
+    return ScreenID::Dashboard;
 }

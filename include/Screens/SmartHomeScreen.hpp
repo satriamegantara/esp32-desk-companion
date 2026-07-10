@@ -7,6 +7,7 @@
 class SmartHomeScreen : public Screen
 {
 public:
+    SmartHomeMenu currentMenu() const;
     void begin(LGFX &lcd) override;
     void update(LGFX &lcd) override;
     void end() override {}
@@ -17,10 +18,15 @@ public:
     void activate() override;
 
 private:
-        SmartHomeMenu selected = SmartHomeMenu::Lamp;
+    SmartHomeMenu selected = SmartHomeMenu::Lamp;
     SmartHomeMenu previous = SmartHomeMenu::Lamp;
 
     bool needRedraw = false;
+
+    bool lastLamp = false;
+    bool lastFan = false;
+    FanSpeed lastSpeed = FanSpeed::Low;
+    bool lastSwing = false;
 
     SmartHomeController controller;
 
@@ -33,4 +39,6 @@ private:
     void drawBack(LGFX &lcd);
 
     void drawRow(LGFX &lcd, SmartHomeMenu menu);
+    void drawHint(LGFX &lcd);
+    void drawFooterArea(LGFX &lcd);
 };

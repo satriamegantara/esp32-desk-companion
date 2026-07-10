@@ -40,25 +40,6 @@ namespace Layout
     constexpr int MagicWindY = 235;
     constexpr int TimerY = 270;
 
-    //=========================
-    // Camera
-    //=========================
-
-    constexpr Rect CameraCard =
-        {
-            20,
-            40,
-            440,
-            240};
-
-    constexpr int CameraTitleY = 15;
-
-    constexpr int CameraStatusY = 255;
-
-    constexpr int CameraFPSY = 280;
-
-    constexpr int CameraSizeY = 305;
-
     // Footer
     constexpr int FooterCol1 = 60;
     constexpr int FooterCol2 = 180;
@@ -69,7 +50,9 @@ namespace Layout
 
     constexpr int Margin = 20;
     constexpr int CardGap = 20;
-    constexpr int CardRadius = 10;
+    constexpr int CardRadius = 12;
+    constexpr int CardTitleY = 14;
+    constexpr int CardBottomHeight = 55;
     constexpr int TitlePadding = 15;
     constexpr int RowHeight = 35;
 
@@ -79,4 +62,53 @@ namespace Layout
     constexpr int SH_RowHeight = 45;
     constexpr int SH_TextX = 60;
     constexpr int SH_StateX = 420;
+    constexpr int SH_SeparatorY = 255;
+    constexpr int SH_BackY = 425;
+    constexpr int SH_BackX = 40;
+    constexpr int SH_HintY = 268;
+
+    extern Rect CameraCard;
+
+    extern const int CameraTitleY;
+
+    extern const int CameraStatusY;
+
+    extern const int CameraFPSY;
+
+    extern const int CameraSizeY;
+
+    extern const int CameraInfoY;
+
+    extern Rect SystemCard;
+
+    // System Screen
+    // Title
+    constexpr int SYS_TitleY = 20;
+
+    // Section
+    constexpr int SYS_HardwareY = 55; // gap 48 ke 55
+    constexpr int SYS_NetworkY = 167; // 44 //gap 27
+    constexpr int SYS_RuntimeY = 238; // 98
+
+    // Row
+    constexpr int SYS_CPUY = 77;
+    constexpr int SYS_HeapY = 96;
+    constexpr int SYS_PSRAMY = 118;
+    constexpr int SYS_FlashY = 140;
+
+    constexpr int SYS_WiFiY = 189;
+    constexpr int SYS_IPY = 211;
+
+    constexpr int SYS_UptimeY = 260;
+
+    // Column
+    constexpr int SYS_LabelX = 35;
+    constexpr int SYS_ValueRightX = 440;
+
+    // Footer
+    constexpr int SYS_LineY = 285;
+
+    constexpr int SYS_BackY = 293;
+
+    constexpr int SYS_BackX = 35;
 }

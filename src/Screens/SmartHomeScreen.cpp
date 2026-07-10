@@ -16,29 +16,62 @@ void SmartHomeScreen::begin(LGFX &lcd)
     drawFan(lcd);
     drawSpeed(lcd);
     drawSwing(lcd);
-    drawBack(lcd);
+    drawFooterArea(lcd);
 
     needRedraw = false;
+
+    lastLamp = appState.lamp;
+    lastFan = appState.fan;
+    lastSpeed = appState.fanSpeed;
+    lastSwing = appState.swing;
 }
 
 void SmartHomeScreen::update(LGFX &lcd)
 {
-    if (!needRedraw)
-        return;
+    if (needRedraw)
+    {
+        drawRow(lcd, previous);
+        drawRow(lcd, selected);
 
-    drawRow(lcd, previous);
+        previous = selected;
 
-    drawRow(lcd, selected);
+        drawFooterArea(lcd);
 
-    if (selected == SmartHomeMenu::Lamp)
+        needRedraw = false;
+    }
+
+    if (lastLamp != appState.lamp)
+    {
         drawLamp(lcd);
+        lastLamp = appState.lamp;
+    }
 
-    needRedraw = false;
+    if (lastFan != appState.fan)
+    {
+        drawFan(lcd);
+        lastFan = appState.fan;
+    }
+
+    if (lastSpeed != appState.fanSpeed)
+    {
+        drawSpeed(lcd);
+        lastSpeed = appState.fanSpeed;
+    }
+
+    if (lastSwing != appState.swing)
+    {
+        drawSwing(lcd);
+        lastSwing = appState.swing;
+    }
 }
 
 void SmartHomeScreen::drawHeader(LGFX &lcd)
 {
     lcd.setFont(&fonts::Font4);
+
+    lcd.setTextColor(
+        Theme::White,
+        Theme::Background);
 
     lcd.setTextColor(Theme::White);
 
@@ -60,6 +93,10 @@ void SmartHomeScreen::drawLamp(LGFX &lcd)
         Theme::Background);
 
     lcd.setFont(&fonts::Font2);
+
+    lcd.setTextColor(
+        Theme::White,
+        Theme::Background);
 
     String prefix =
         selected == SmartHomeMenu::Lamp
@@ -89,6 +126,10 @@ void SmartHomeScreen::drawFan(LGFX &lcd)
         Theme::Background);
 
     lcd.setFont(&fonts::Font2);
+
+    lcd.setTextColor(
+        Theme::White,
+        Theme::Background);
 
     String prefix =
         selected == SmartHomeMenu::Fan
@@ -121,12 +162,21 @@ void SmartHomeScreen::drawSpeed(LGFX &lcd)
 
     lcd.setFont(&fonts::Font2);
 
+    lcd.setTextColor(
+        Theme::White,
+        Theme::Background);
+
     String prefix =
         selected == SmartHomeMenu::Speed
             ? "> "
             : "  ";
 
-    String text = "LOW";
+    lcd.drawString(
+        prefix + "Speed",
+        Layout::SH_TextX,
+        y);
+
+    String text;
 
     switch (appState.fanSpeed)
     {
@@ -142,11 +192,6 @@ void SmartHomeScreen::drawSpeed(LGFX &lcd)
         text = "HIGH";
         break;
     }
-
-    lcd.drawString(
-        prefix + "Speed",
-        Layout::SH_TextX,
-        y);
 
     lcd.drawRightString(
         text,
@@ -168,6 +213,10 @@ void SmartHomeScreen::drawSwing(LGFX &lcd)
         Theme::Background);
 
     lcd.setFont(&fonts::Font2);
+
+    lcd.setTextColor(
+        Theme::White,
+        Theme::Background);
 
     String prefix =
         selected == SmartHomeMenu::Swing
@@ -219,32 +268,25 @@ void SmartHomeScreen::previousWidget()
 
 void SmartHomeScreen::drawBack(LGFX &lcd)
 {
-    int y =
-        Layout::SH_StartY +
-        Layout::SH_RowHeight * 4;
-
     lcd.fillRect(
         20,
-        y - 2,
+        Layout::SH_BackY - 2,
         440,
         24,
         Theme::Background);
 
-    lcd.drawFastHLine(
-        20,
-        y - 12,
-        440,
-        TFT_DARKGREY);
+    lcd.setFont(&fonts::Font2);
 
-    String prefix =
+    lcd.setTextColor(
         selected == SmartHomeMenu::Back
-            ? "> "
-            : "  ";
+            ? Theme::Accent
+            : Theme::White,
+        Theme::Background);
 
     lcd.drawString(
-        prefix + "Back",
-        Layout::SH_TextX,
-        y);
+        "< Dashboard",
+        Layout::SH_BackX,
+        Layout::SH_BackY);
 }
 
 void SmartHomeScreen::activate()
@@ -252,22 +294,40 @@ void SmartHomeScreen::activate()
     switch (selected)
     {
     case SmartHomeMenu::Lamp:
-
         controller.toggleLamp();
+        break;
 
-        needRedraw = true;
+    case SmartHomeMenu::Fan:
+        controller.toggleFan();
+        break;
+
+    case SmartHomeMenu::Speed:
+
+        switch (appState.fanSpeed)
+        {
+        case FanSpeed::Low:
+            controller.setFanSpeed(FanSpeed::Medium);
+            break;
+
+        case FanSpeed::Medium:
+            controller.setFanSpeed(FanSpeed::High);
+            break;
+
+        case FanSpeed::High:
+            controller.setFanSpeed(FanSpeed::Low);
+            break;
+        }
 
         break;
 
     default:
-
         break;
     }
+
+    needRedraw = true;
 }
 
-void SmartHomeScreen::drawRow(
-    LGFX &lcd,
-    SmartHomeMenu menu)
+void SmartHomeScreen::drawRow(LGFX &lcd, SmartHomeMenu menu)
 {
     switch (menu)
     {
@@ -294,4 +354,72 @@ void SmartHomeScreen::drawRow(
     default:
         break;
     }
+}
+
+SmartHomeMenu SmartHomeScreen::currentMenu() const
+{
+    return selected;
+}
+
+void SmartHomeScreen::drawHint(LGFX &lcd)
+{
+    lcd.fillRect(
+        20,
+        Layout::SH_HintY - 2,
+        440,
+        18,
+        Theme::Background);
+
+    lcd.setFont(&fonts::Font2);
+
+    lcd.setTextColor(
+        TFT_DARKGREY,
+        Theme::Background);
+
+    String hint;
+
+    switch (selected)
+    {
+    case SmartHomeMenu::Lamp:
+        hint = "Press to toggle lamp";
+        break;
+
+    case SmartHomeMenu::Fan:
+        hint = "Press to toggle fan";
+        break;
+
+    case SmartHomeMenu::Speed:
+        hint = "Press to change speed";
+        break;
+
+    case SmartHomeMenu::Swing:
+        hint = "Press to toggle swing";
+        break;
+
+    case SmartHomeMenu::Back:
+        hint = "Return to dashboard";
+        break;
+
+    default:
+        hint = "";
+        break;
+    }
+
+    lcd.drawCentreString(
+        hint,
+        240,
+        Layout::SH_HintY);
+}
+
+void SmartHomeScreen::drawFooterArea(LGFX &lcd)
+{
+    lcd.drawFastHLine(
+        30,
+        Layout::SH_SeparatorY,
+        420,
+        TFT_DARKGREY);
+
+    drawHint(lcd);
+
+    drawBack(lcd);
 }

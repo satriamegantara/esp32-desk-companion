@@ -11,4 +11,7 @@ private:
 public:
     void draw(LGFX &lcd) override;
     void update(LGFX &lcd) override;
+    ClockWidget();
+    ScreenID targetScreen() const override;
+    bool lastSelected = false;
 };

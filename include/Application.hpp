@@ -12,6 +12,7 @@
 #include "Controllers/EnvironmentController.hpp"
 #include "Controllers/ClockController.hpp"
 #include "Controllers/UIController.hpp"
+#include "Controllers/CameraController.hpp"
 
 class Application
 {
@@ -33,4 +34,5 @@ private:
 
     EnvironmentController environment;
     ClockController clock;
+    CameraController camera;
 };

@@ -20,6 +20,7 @@ void Application::begin(LGFX &lcd)
     smartHome.begin();
     irReceiver.begin();
     irSender.begin();
+    camera.begin();
 }
 
 void Application::update(LGFX &lcd)
@@ -31,6 +32,7 @@ void Application::update(LGFX &lcd)
     clock.update();
     environment.update();
     irReceiver.update();
+    camera.update();
 
     appState.wifiConnected = wifiManager.connected();
 
@@ -45,6 +47,9 @@ void Application::update(LGFX &lcd)
     }
 
     appState.freeHeap = ESP.getFreeHeap() / 1024;
+    appState.cpuFreq = getCpuFrequencyMhz();
+    appState.psramSize = ESP.getPsramSize() / 1024 / 1024;
+    appState.flashSize = ESP.getFlashChipSize() / 1024 / 1024;
     appState.uptime = millis() / 1000;
     uiController.update(lcd);
     uiController.render(lcd);

@@ -68,8 +68,10 @@ void SmartHomeController::turnFanOff()
 
 void SmartHomeController::toggleFan()
 {
-    fanRelay.toggle();
-    syncFan();
+    if (appState.fan)
+        turnFanOff();
+    else
+        turnFanOn();
 }
 
 bool SmartHomeController::isFanOn() const
@@ -77,9 +79,29 @@ bool SmartHomeController::isFanOn() const
     return appState.fan;
 }
 
-void SmartHomeController::setFanSpeed(FanSpeed)
+void SmartHomeController::setFanSpeed(FanSpeed speed)
 {
-    // TODO
+    if (!appState.fan)
+        return;
+
+    switch (speed)
+    {
+    case FanSpeed::Low:
+        irSender.sendLow();
+        break;
+
+    case FanSpeed::Medium:
+        irSender.sendMedium();
+        break;
+
+    case FanSpeed::High:
+        irSender.sendHigh();
+        break;
+    }
+
+    appState.fanSpeed = speed;
+
+    dirty.smartHome = true;
 }
 
 void SmartHomeController::setSwing(bool enable)

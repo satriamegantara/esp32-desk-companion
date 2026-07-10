@@ -23,6 +23,8 @@ public:
 
     ScreenID currentScreen() const;
     DashboardScreen &getDashboard();
+    SmartHomeScreen &smartHomeScreen();
+    DashboardScreen &dashboardScreen();
 
 private:
     LGFX *display = nullptr;

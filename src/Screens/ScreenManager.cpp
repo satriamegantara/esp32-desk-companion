@@ -98,3 +98,13 @@ DashboardScreen &ScreenManager::getDashboard()
 {
     return dashboard;
 }
+
+SmartHomeScreen &ScreenManager::smartHomeScreen()
+{
+    return smartHome;
+}
+
+DashboardScreen &ScreenManager::dashboardScreen()
+{
+    return dashboard;
+}

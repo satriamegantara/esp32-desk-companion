@@ -14,6 +14,12 @@ void DashboardScreen::begin(LGFX &lcd)
 {
     lcd.fillScreen(Theme::Background);
 
+    lcd.setFont(&fonts::Font2);
+
+    lcd.setTextColor(
+        Theme::White,
+        Theme::Background);
+
     statusBar.draw(lcd);
 
     footerWidget.draw(lcd);
@@ -22,6 +28,14 @@ void DashboardScreen::begin(LGFX &lcd)
 
     widgetManager.add(&clockWidget);
     widgetManager.add(&smartHomeWidget);
+    widgetManager.add(&cameraWidget);
+    widgetManager.add(&systemWidget);
+    widgetManager.add(&footerWidget);
+
+    clockWidget.onDeselected();
+    smartHomeWidget.onDeselected();
+    cameraWidget.onDeselected();
+    systemWidget.onDeselected();
 
     updateSelection();
 
@@ -31,6 +45,8 @@ void DashboardScreen::begin(LGFX &lcd)
     dirty.clock = false;
     dirty.smartHome = false;
     dirty.footer = false;
+    dirty.camera = false;
+    dirty.system = false;
 }
 
 void DashboardScreen::update(LGFX &lcd)
@@ -59,26 +75,26 @@ void DashboardScreen::previousWidget()
 
 void DashboardScreen::updateSelection()
 {
-    statusBar.setSelected(false);
-    clockWidget.setSelected(false);
-    smartHomeWidget.setSelected(false);
-    footerWidget.setSelected(false);
-
-    Widget *current = widgetManager.currentWidget();
+    Widget *current =
+        widgetManager.currentWidget();
 
     if (current)
-    {
-        current->setSelected(true);
-    }
+        current->onSelected();
 
-    dirty.header = true;
     dirty.clock = true;
     dirty.smartHome = true;
     dirty.footer = true;
+    dirty.camera = true;
+    dirty.system = true;
 }
 
 uint8_t DashboardScreen::selectedWidget() const
 {
 
     return widgetManager.selectedIndex();
+}
+
+ScreenID DashboardScreen::selectedScreen() const
+{
+    return widgetManager.currentTarget();
 }
