@@ -89,3 +89,18 @@ ScreenID WidgetManager::currentTarget() const
 
     return current->targetScreen();
 }
+
+bool WidgetManager::isFirst() const
+{
+    return currentIndex == 0;
+}
+
+bool WidgetManager::isLast() const
+{
+    return currentIndex == widgetCount() - 1;
+}
+
+uint8_t WidgetManager::widgetCount() const
+{
+    return count;
+}

@@ -13,6 +13,12 @@ public:
     void next();
     void previous();
 
+    bool isFirst() const;
+
+    bool isLast() const;
+
+    uint8_t widgetCount() const;
+
     Widget *currentWidget() const;
 
     uint8_t selectedIndex() const;

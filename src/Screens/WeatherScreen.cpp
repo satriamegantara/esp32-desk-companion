@@ -16,14 +16,14 @@ void WeatherScreen::begin(LGFX &lcd)
     lcd.setFont(&fonts::Font4);
 
     lcd.drawCentreString(
-        "WEATHER",
+        "Weather",
         240,
         20);
 
     lcd.setFont(&fonts::Font8);
 
     lcd.drawCentreString(
-        String((int)appState.weather.temperature) + "°C",
+        String((int)appState.weather.temperature) + " C",
         240,
         70);
 

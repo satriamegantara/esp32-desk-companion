@@ -10,6 +10,9 @@
 #include "Widgets/WidgetManager.hpp"
 #include "Widgets/CameraWidget.hpp"
 #include "Widgets/SystemWidget.hpp"
+#include "Pages/DashboardPage.hpp"
+#include "Pages/WeatherPage.hpp"
+#include "Home/HomeNavigator.hpp"
 
 class DashboardScreen : public Screen
 {
@@ -26,15 +29,20 @@ public:
 
     uint8_t selectedWidget() const;
 
+    DashboardScreen();
+
 private:
     HomePage currentPage =
         HomePage::Dashboard;
+    bool pageChanged = false;
 
     void nextPage();
     void previousPage();
     HomePage page() const;
     bool isDashboardPage() const;
     bool isWeatherPage() const;
+
+    void updateWeather(LGFX &lcd);
 
     StatusBar statusBar;
     ClockWidget clockWidget;
@@ -44,4 +52,7 @@ private:
     SystemWidget systemWidget;
 
     WidgetManager widgetManager;
+
+    DashboardPage dashboardPage;
+    WeatherPage weatherPage;
 };

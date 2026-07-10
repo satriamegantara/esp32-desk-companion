@@ -7,8 +7,17 @@
 #include "Widgets/StatusBar.hpp"
 #include "Theme.hpp"
 #include "ScreenID.hpp"
+#include "AppState.hpp"
 
 #include "Dashboard.hpp"
+
+DashboardScreen::DashboardScreen()
+    : dashboardPage(
+          statusBar,
+          footerWidget,
+          widgetManager)
+{
+}
 
 void DashboardScreen::begin(LGFX &lcd)
 {
@@ -20,10 +29,6 @@ void DashboardScreen::begin(LGFX &lcd)
         Theme::White,
         Theme::Background);
 
-    statusBar.draw(lcd);
-
-    footerWidget.draw(lcd);
-
     widgetManager.clear();
 
     widgetManager.add(&clockWidget);
@@ -31,14 +36,12 @@ void DashboardScreen::begin(LGFX &lcd)
     widgetManager.add(&cameraWidget);
     widgetManager.add(&systemWidget);
 
-    clockWidget.onDeselected();
-    smartHomeWidget.onDeselected();
-    cameraWidget.onDeselected();
-    systemWidget.onDeselected();
-
     updateSelection();
 
-    widgetManager.draw(lcd);
+    if (currentPage == HomePage::Dashboard)
+        dashboardPage.draw(lcd);
+    else
+        weatherPage.draw(lcd);
 
     dirty.header = false;
     dirty.clock = false;
@@ -50,9 +53,30 @@ void DashboardScreen::begin(LGFX &lcd)
 
 void DashboardScreen::update(LGFX &lcd)
 {
-    statusBar.update(lcd);
-    widgetManager.update(lcd);
-    footerWidget.update(lcd);
+    if (pageChanged)
+    {
+        pageChanged = false;
+
+        if (currentPage == HomePage::Dashboard)
+            dashboardPage.draw(lcd);
+        else
+            weatherPage.draw(lcd);
+
+        return;
+    }
+
+    if (currentPage == HomePage::Dashboard)
+    {
+        statusBar.update(lcd);
+
+        widgetManager.update(lcd);
+
+        footerWidget.update(lcd);
+    }
+    else
+    {
+        updateWeather(lcd);
+    }
 }
 
 void DashboardScreen::end()
@@ -61,24 +85,26 @@ void DashboardScreen::end()
 
 void DashboardScreen::nextWidget()
 {
-
-    widgetManager.next();
-
-    if (widgetManager.selectedIndex() == 0 &&
-        currentPage == HomePage::Dashboard)
+    if (currentPage == HomePage::Weather)
     {
-        currentPage = HomePage::Weather;
+        currentPage = HomePage::Dashboard;
+        pageChanged = true;
 
-        // sementara cukup redraw penuh
-        dirty.clock = true;
-        dirty.smartHome = true;
-        dirty.camera = true;
-        dirty.system = true;
-        dirty.footer = true;
+        while (!widgetManager.isFirst())
+            widgetManager.previous();
 
+        updateSelection();
         return;
     }
 
+    if (widgetManager.isLast())
+    {
+        currentPage = HomePage::Weather;
+        pageChanged = true;
+        return;
+    }
+
+    widgetManager.next();
     updateSelection();
 }
 
@@ -87,23 +113,29 @@ void DashboardScreen::previousWidget()
     if (currentPage == HomePage::Weather)
     {
         currentPage = HomePage::Dashboard;
+        pageChanged = true;
 
-        dirty.clock = true;
-        dirty.smartHome = true;
-        dirty.camera = true;
-        dirty.system = true;
-        dirty.footer = true;
+        while (!widgetManager.isLast())
+            widgetManager.next();
 
+        updateSelection();
         return;
     }
 
     widgetManager.previous();
-
     updateSelection();
 }
 
 void DashboardScreen::updateSelection()
 {
+    clockWidget.onDeselected();
+
+    smartHomeWidget.onDeselected();
+
+    cameraWidget.onDeselected();
+
+    systemWidget.onDeselected();
+
     Widget *current =
         widgetManager.currentWidget();
 
@@ -112,13 +144,15 @@ void DashboardScreen::updateSelection()
 
     dirty.clock = true;
     dirty.smartHome = true;
-    dirty.footer = true;
     dirty.camera = true;
     dirty.system = true;
+    dirty.footer = true;
 }
 
 uint8_t DashboardScreen::selectedWidget() const
 {
+    if (currentPage == HomePage::Weather)
+        return 4;
 
     return widgetManager.selectedIndex();
 }
@@ -154,4 +188,68 @@ bool DashboardScreen::isDashboardPage() const
 bool DashboardScreen::isWeatherPage() const
 {
     return currentPage == HomePage::Weather;
+}
+
+void DashboardScreen::updateWeather(LGFX &lcd)
+{
+    static float lastTemp = -100;
+    static float lastHum = -100;
+    static String lastDesc = "";
+
+    if (lastTemp != appState.weather.temperature)
+    {
+        lastTemp = appState.weather.temperature;
+
+        lcd.fillRect(
+            110,
+            60,
+            260,
+            60,
+            Theme::Background);
+
+        lcd.setFont(&fonts::Font8);
+
+        lcd.drawCentreString(
+            String((int)lastTemp) + "°C",
+            240,
+            70);
+    }
+
+    if (lastDesc != appState.weather.description)
+    {
+        lastDesc = appState.weather.description;
+
+        lcd.fillRect(
+            60,
+            140,
+            360,
+            25,
+            Theme::Background);
+
+        lcd.setFont(&fonts::Font4);
+
+        lcd.drawCentreString(
+            lastDesc,
+            240,
+            145);
+    }
+
+    if (lastHum != appState.weather.humidity)
+    {
+        lastHum = appState.weather.humidity;
+
+        lcd.fillRect(
+            310,
+            220,
+            130,
+            20,
+            Theme::Background);
+
+        lcd.setFont(&fonts::Font2);
+
+        lcd.drawRightString(
+            String((int)lastHum) + "%",
+            440,
+            225);
+    }
 }

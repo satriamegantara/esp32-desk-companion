@@ -5,9 +5,12 @@
 class WeatherController
 {
 public:
-    void begin();
+    bool begin();
+
     void update();
 
 private:
     uint32_t lastUpdate = 0;
+
+    bool fetchWeather();
 };
