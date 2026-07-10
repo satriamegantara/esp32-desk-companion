@@ -2,6 +2,7 @@
 #include "Theme.hpp"
 #include "Layout.hpp"
 #include "AppState.hpp"
+#include "Dashboard.hpp"
 
 void SystemScreen::begin(LGFX &lcd)
 {
@@ -245,10 +246,12 @@ void SystemScreen::end()
 
 void SystemScreen::nextWidget()
 {
+    dashboardSelected = true;
 }
 
 void SystemScreen::previousWidget()
 {
+    dashboardSelected = true;
 }
 
 void SystemScreen::drawBack(LGFX &lcd)

@@ -30,7 +30,6 @@ void DashboardScreen::begin(LGFX &lcd)
     widgetManager.add(&smartHomeWidget);
     widgetManager.add(&cameraWidget);
     widgetManager.add(&systemWidget);
-    widgetManager.add(&footerWidget);
 
     clockWidget.onDeselected();
     smartHomeWidget.onDeselected();
@@ -51,7 +50,9 @@ void DashboardScreen::begin(LGFX &lcd)
 
 void DashboardScreen::update(LGFX &lcd)
 {
+    statusBar.update(lcd);
     widgetManager.update(lcd);
+    footerWidget.update(lcd);
 }
 
 void DashboardScreen::end()

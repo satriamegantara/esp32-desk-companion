@@ -45,6 +45,14 @@ void ScreenManager::previousWidget()
 
 void ScreenManager::activateCurrent()
 {
+    // SystemScreen hanya punya satu aksi:
+    // kembali ke Dashboard
+    if (current == 3)
+    {
+        open(ScreenID::Dashboard, *display);
+        return;
+    }
+
     screens[current]->activate();
 }
 

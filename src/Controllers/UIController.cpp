@@ -76,6 +76,12 @@ void UIController::handleSelection(LGFX &lcd)
 
     screenManager.activateCurrent();
   }
+
+  if (screenManager.currentScreen() == ScreenID::System)
+  {
+    screenManager.activateCurrent();
+    return;
+  }
 }
 
 void UIController::handleBootButton()

@@ -18,4 +18,5 @@ private:
     bool backSelected = true;
 
     void drawBack(LGFX &lcd);
+    bool dashboardSelected = true;
 };
