@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LGFX_Config.hpp"
+#include "Pins.hpp"
 #include "Screens/ScreenManager.hpp"
 #include "UpdateManager.hpp"
 #include "InputManager.hpp"
@@ -33,6 +34,8 @@ private:
     InputManager inputManager;
     IRReceiver irReceiver;
     IRSender irSender;
+    RelayDriver relayLamp;
+    RelayDriver relayAux;
 
     EnvironmentController environment;
     WeatherController weather;

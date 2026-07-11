@@ -27,7 +27,7 @@ public:
 
 private:
     RelayDriver lampRelay{Pins::RelayLamp};
-    RelayDriver fanRelay{Pins::RelayFan};
+    RelayDriver auxRelay{Pins::RelayAux};
 
     IRSender irSender;
 

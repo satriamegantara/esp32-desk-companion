@@ -55,6 +55,15 @@ static String capitalizeWords(
 
 void WeatherPage::draw(LGFX &lcd)
 {
+    lastTemperature = -999;
+    lastHumidity = -999;
+    lastFeelsLike = -999;
+    lastWindSpeed = -999;
+
+    lastDescription = "";
+    lastCity = "";
+    lastIcon = WeatherIcon::Unknown;
+
     lcd.fillScreen(Theme::Background);
 
     lcd.setTextColor(
@@ -176,6 +185,29 @@ void WeatherPage::draw(LGFX &lcd)
 
 void WeatherPage::update(LGFX &lcd)
 {
-    // Sementara kosong.
-    // Commit berikutnya kita buat partial redraw.
+    if (lastTemperature != appState.weather.temperature)
+    {
+        lastTemperature =
+            appState.weather.temperature;
+
+        lcd.fillRect(
+            120,
+            75,
+            240,
+            45,
+            Theme::Background);
+
+        lcd.setFont(&fonts::Font8);
+
+        lcd.setTextColor(
+            Theme::White,
+            Theme::Background);
+
+        lcd.drawCentreString(
+            String(lastTemperature, 1) + "°C",
+            240,
+            75);
+    }
+
+    // commit berikutnya lanjut humidity dll
 }

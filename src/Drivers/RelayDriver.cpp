@@ -3,11 +3,9 @@
 
 void RelayDriver::begin()
 {
-    pinMode(Pins::RelayLamp, OUTPUT);
-    pinMode(Pins::RelayFan, OUTPUT);
+    pinMode(pin, OUTPUT);
 
-    digitalWrite(Pins::RelayLamp, HIGH);
-    digitalWrite(Pins::RelayFan, HIGH);
+    off();
 }
 
 RelayDriver::RelayDriver(uint8_t pin, bool activeLow)

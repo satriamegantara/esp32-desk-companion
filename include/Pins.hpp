@@ -20,5 +20,5 @@ namespace Pins
 
     // Relay
     constexpr int RelayLamp = 16;
-    constexpr int RelayFan = 38;
+    constexpr int RelayAux = 38;
 }

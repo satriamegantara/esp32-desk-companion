@@ -39,9 +39,13 @@ void DashboardScreen::begin(LGFX &lcd)
     updateSelection();
 
     if (currentPage == HomePage::Dashboard)
+    {
         dashboardPage.draw(lcd);
+    }
     else
+    {
         weatherPage.draw(lcd);
+    }
 
     dirty.header = false;
     dirty.clock = false;
@@ -58,9 +62,13 @@ void DashboardScreen::update(LGFX &lcd)
         pageChanged = false;
 
         if (currentPage == HomePage::Dashboard)
+        {
             dashboardPage.draw(lcd);
+        }
         else
+        {
             weatherPage.draw(lcd);
+        }
 
         return;
     }
@@ -75,7 +83,7 @@ void DashboardScreen::update(LGFX &lcd)
     }
     else
     {
-        updateWeather(lcd);
+        weatherPage.update(lcd);
     }
 }
 
@@ -88,12 +96,14 @@ void DashboardScreen::nextWidget()
     if (currentPage == HomePage::Weather)
     {
         currentPage = HomePage::Dashboard;
-        pageChanged = true;
 
         while (!widgetManager.isFirst())
             widgetManager.previous();
 
         updateSelection();
+
+        pageChanged = true;
+
         return;
     }
 
@@ -113,16 +123,27 @@ void DashboardScreen::previousWidget()
     if (currentPage == HomePage::Weather)
     {
         currentPage = HomePage::Dashboard;
-        pageChanged = true;
 
         while (!widgetManager.isLast())
             widgetManager.next();
 
         updateSelection();
+
+        pageChanged = true;
+
+        return;
+    }
+
+    // Clock -> Weather
+    if (widgetManager.isFirst())
+    {
+        currentPage = HomePage::Weather;
+        pageChanged = true;
         return;
     }
 
     widgetManager.previous();
+
     updateSelection();
 }
 
@@ -188,68 +209,4 @@ bool DashboardScreen::isDashboardPage() const
 bool DashboardScreen::isWeatherPage() const
 {
     return currentPage == HomePage::Weather;
-}
-
-void DashboardScreen::updateWeather(LGFX &lcd)
-{
-    static float lastTemp = -100;
-    static float lastHum = -100;
-    static String lastDesc = "";
-
-    if (lastTemp != appState.weather.temperature)
-    {
-        lastTemp = appState.weather.temperature;
-
-        lcd.fillRect(
-            110,
-            60,
-            260,
-            60,
-            Theme::Background);
-
-        lcd.setFont(&fonts::Font8);
-
-        lcd.drawCentreString(
-            String((int)lastTemp) + "°C",
-            240,
-            70);
-    }
-
-    if (lastDesc != appState.weather.description)
-    {
-        lastDesc = appState.weather.description;
-
-        lcd.fillRect(
-            60,
-            140,
-            360,
-            25,
-            Theme::Background);
-
-        lcd.setFont(&fonts::Font4);
-
-        lcd.drawCentreString(
-            lastDesc,
-            240,
-            145);
-    }
-
-    if (lastHum != appState.weather.humidity)
-    {
-        lastHum = appState.weather.humidity;
-
-        lcd.fillRect(
-            310,
-            220,
-            130,
-            20,
-            Theme::Background);
-
-        lcd.setFont(&fonts::Font2);
-
-        lcd.drawRightString(
-            String((int)lastHum) + "%",
-            440,
-            225);
-    }
 }

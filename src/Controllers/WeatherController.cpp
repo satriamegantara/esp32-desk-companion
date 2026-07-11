@@ -27,7 +27,7 @@ void WeatherController::update()
     if (!WiFi.isConnected())
         return;
 
-    if (millis() - lastUpdate < 2000)
+    if (millis() - lastUpdate < 60000)
         return;
 
     lastUpdate = millis();
@@ -132,69 +132,69 @@ bool WeatherController::fetchWeather()
     else
         appState.weather.icon = WeatherIcon::Unknown;
 
-    Serial.println("====== WEATHER ======");
+    // Serial.println("====== WEATHER ======");
 
-    Serial.print("City        : ");
+    // Serial.print("City        : ");
 
-    Serial.println(appState.weather.city);
+    // Serial.println(appState.weather.city);
 
-    Serial.print("Temperature : ");
+    // Serial.print("Temperature : ");
 
-    Serial.print(appState.weather.temperature);
+    // Serial.print(appState.weather.temperature);
 
-    Serial.println(" °C");
+    // Serial.println(" °C");
 
-    Serial.print("Humidity    : ");
+    // Serial.print("Humidity    : ");
 
-    Serial.print(appState.weather.humidity);
+    // Serial.print(appState.weather.humidity);
 
-    Serial.println(" %");
+    // Serial.println(" %");
 
-    Serial.print("Description : ");
+    // Serial.print("Description : ");
 
-    Serial.println(appState.weather.description);
+    // Serial.println(appState.weather.description);
 
-    Serial.print("Feels Like : ");
+    // Serial.print("Feels Like : ");
 
-    Serial.println(appState.weather.feelsLike);
+    // Serial.println(appState.weather.feelsLike);
 
-    Serial.print("Wind Speed : ");
+    // Serial.print("Wind Speed : ");
 
-    Serial.println(appState.weather.windSpeed);
+    // Serial.println(appState.weather.windSpeed);
 
-    Serial.print("Icon Type : ");
+    // Serial.print("Icon Type : ");
 
-    switch (appState.weather.icon)
-    {
-    case WeatherIcon::Clear:
-        Serial.println("Clear");
-        break;
+    // switch (appState.weather.icon)
+    // {
+    // case WeatherIcon::Clear:
+    //     Serial.println("Clear");
+    //     break;
 
-    case WeatherIcon::Cloud:
-        Serial.println("Cloud");
-        break;
+    // case WeatherIcon::Cloud:
+    //     Serial.println("Cloud");
+    //     break;
 
-    case WeatherIcon::Rain:
-        Serial.println("Rain");
-        break;
+    // case WeatherIcon::Rain:
+    //     Serial.println("Rain");
+    //     break;
 
-    case WeatherIcon::Storm:
-        Serial.println("Storm");
-        break;
+    // case WeatherIcon::Storm:
+    //     Serial.println("Storm");
+    //     break;
 
-    case WeatherIcon::Snow:
-        Serial.println("Snow");
-        break;
+    // case WeatherIcon::Snow:
+    //     Serial.println("Snow");
+    //     break;
 
-    case WeatherIcon::Mist:
-        Serial.println("Mist");
-        break;
+    // case WeatherIcon::Mist:
+    //     Serial.println("Mist");
+    //     break;
 
-    default:
-        Serial.println("Unknown");
-    }
+    // default:
+    //     Serial.println("Unknown");
+    // }
 
-    Serial.println("=====================");
+    // Serial.println("=====================");
 
     http.end();
 

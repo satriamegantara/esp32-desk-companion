@@ -9,7 +9,7 @@ extern DirtyFlags dirty;
 void SmartHomeController::begin()
 {
     lampRelay.begin();
-    fanRelay.begin();
+    auxRelay.begin();
     irSender.begin();
 }
 
@@ -21,7 +21,7 @@ void SmartHomeController::syncLamp()
 
 void SmartHomeController::syncFan()
 {
-    appState.fan = fanRelay.isOn();
+    appState.fan = auxRelay.isOn();
     dirty.smartHome = true;
 }
 
@@ -50,7 +50,7 @@ bool SmartHomeController::isLampOn() const
 
 void SmartHomeController::turnFanOn()
 {
-    fanRelay.on();
+    auxRelay.on();
 
     irSender.sendPower();
 
@@ -59,7 +59,7 @@ void SmartHomeController::turnFanOn()
 
 void SmartHomeController::turnFanOff()
 {
-    fanRelay.off();
+    auxRelay.off();
 
     irSender.sendPower();
 

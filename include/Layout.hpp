@@ -111,4 +111,22 @@ namespace Layout
     constexpr int SYS_BackY = 293;
 
     constexpr int SYS_BackX = 35;
+
+    // =========================
+    // Weather
+    // =========================
+
+    constexpr Rect WeatherMainCard =
+        {
+            20,
+            40,
+            440,
+            150};
+
+    constexpr Rect WeatherInfoCard =
+        {
+            20,
+            200,
+            440,
+            90};
 }

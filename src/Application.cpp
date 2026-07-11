@@ -3,9 +3,12 @@
 #include "AppState.hpp"
 #include "WiFiManager.hpp"
 #include "TimeManager.hpp"
+#include "Pins.hpp"
 
 Application::Application()
-    : uiController(encoder, smartHome)
+    : relayLamp(Pins::RelayLamp),
+      relayAux(Pins::RelayAux),
+      uiController(encoder, smartHome)
 {
 }
 
@@ -20,9 +23,14 @@ void Application::begin(LGFX &lcd)
     weather.begin();
     system.begin();
     smartHome.begin();
+    relayLamp.begin();
+    relayAux.begin();
     irReceiver.begin();
     irSender.begin();
     camera.begin();
+
+    // Serial.println();
+    // Serial.println("===== Camera Bringup =====");
 }
 
 void Application::update(LGFX &lcd)
@@ -39,9 +47,23 @@ void Application::update(LGFX &lcd)
     camera.update();
 
     appState.wifiConnected = wifiManager.connected();
-
     appState.ipAddress = wifiManager.ip();
 
-        uiController.update(lcd);
+    static uint32_t lastToggle = 0;
+    static bool state = false;
+
+    if (millis() - lastToggle > 2000)
+    {
+        lastToggle = millis();
+
+        state = !state;
+
+        if (state)
+            relayLamp.on();
+        else
+            relayLamp.off();
+    }
+
+    uiController.update(lcd);
     uiController.render(lcd);
 }
